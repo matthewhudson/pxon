@@ -5,7 +5,11 @@
   "description": "",
   "main": "index.js",
   "module": "es/index.js",
-  "files": ["es", "lib", "umd"],
+  "files": [
+    "es",
+    "lib",
+    "umd"
+  ],
   "author": "Matthew Hudson <matthud@gmail.com>",
   "license": "ISC",
   "devDependencies": {
