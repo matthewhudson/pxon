@@ -13,7 +13,7 @@
   "author": "Matthew Hudson <matthud@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "jsdoc": "3.6.3",
+    "jsdoc": "3.6.4",
     "jsdoc-template": "1.2.0",
     "nwb": "0.23.0",
     "prettier": "2.0.5"
