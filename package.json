@@ -15,7 +15,7 @@
   "devDependencies": {
     "jsdoc": "3.6.3",
     "jsdoc-template": "1.2.0",
-    "nwb": "0.23.0",
+    "nwb": "0.24.6",
     "prettier": "2.0.5"
   }
 }
