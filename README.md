@@ -5,7 +5,7 @@
 > [Full API Documentation &rarr;](https://thematthewhudson.com/pxon/)
 
 [![Build Status](https://travis-ci.org/matthewhudson/pxon.svg?branch=master)](https://travis-ci.org/matthewhudson/pxon)
-[![Coverage Status](https://coveralls.io/repos/github/matthewhudson/pxon/badge.svg?branch=master)](https://coveralls.io/github/matthewhudson/pxon?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/matthewhudson/pxon/badge.svg?branch=main)](https://coveralls.io/github/matthewhudson/pxon?branch=main)
 [![NPM version](https://badge.fury.io/js/pxon.svg)](http://badge.fury.io/js/pxon)
 
 ## Installation

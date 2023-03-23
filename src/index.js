@@ -6,17 +6,17 @@ class PXON {
   /**
    * @constructor
    */
-  constructor() {
-    this.name = "PXON";
+  constructor () {
+    this.name = 'PXON'
     this._data = {
-      software: "",
-      artist: "",
-      imageDescription: "",
-      userComment: "",
-      copyright: "",
-      dateTime: ""
-    };
-    this.pixels = new Map();
+      software: '',
+      artist: '',
+      imageDescription: '',
+      userComment: '',
+      copyright: '',
+      dateTime: ''
+    }
+    this.pixels = new Map()
   }
 
   /**
@@ -25,26 +25,26 @@ class PXON {
    * @param {object} pxif - The PXON pxif data.
    * @param {string} dataURL - The dataURL value.
    */
-  import({ exif = {}, pxif = { pixels: [] }, dataURL = "" }) {
-    this.artist = exif.artist;
-    this.software = exif.software;
-    this.imageDescription = exif.imageDescription;
-    this.userComment = exif.userComment;
-    this.copyright = exif.copyright;
-    this.dateTime = exif.dateTime;
-    this.dataURL = dataURL;
+  import ({ exif = {}, pxif = { pixels: [] }, dataURL = '' }) {
+    this.artist = exif.artist
+    this.software = exif.software
+    this.imageDescription = exif.imageDescription
+    this.userComment = exif.userComment
+    this.copyright = exif.copyright
+    this.dateTime = exif.dateTime
+    this.dataURL = dataURL
 
     // Exposes iterable for easy use in applications
-    pxif.pixels.forEach(pixel => {
-      this.setPixel({ ...pixel });
-    });
+    pxif.pixels.forEach((pixel) => {
+      this.setPixel({ ...pixel })
+    })
   }
 
   /**
    * Export the PXON data as an object.
    * @returns {object} Hash with all PXON properties.
    */
-  export() {
+  export () {
     return {
       exif: {
         software: this.software,
@@ -58,7 +58,7 @@ class PXON {
         pixels: [...this.pixels.values()]
       },
       dataURL: this.dataURL
-    };
+    }
   }
 
   /**
@@ -67,8 +67,8 @@ class PXON {
    * @param {number} y - The y value.
    * @returns {object} Returns a single pixel's `x`, `y`, `size`, and `color`.
    */
-  getPixel(x = 0, y = 0) {
-    return this.pixels.get(`${x}:${y}`);
+  getPixel (x = 0, y = 0) {
+    return this.pixels.get(`${x}:${y}`)
   }
 
   /**
@@ -78,126 +78,126 @@ class PXON {
    * @param {string} color - The hex color value.
    * @param {number} size - The width and height, in real pixels.
    */
-  setPixel(x = 0, y = 0, color = "rgba(255, 255, 255, 1)", size = 1) {
+  setPixel ({ x = 0, y = 0, color = 'rgba(255, 255, 255, 1)', size = 1 }) {
     this.pixels.set(`${x}:${y}`, {
       x,
       y,
       color,
       size
-    });
+    })
   }
 
   /**
    * Set the artist who created this PXON.
    * @param {string} artist - The artist's name.
    */
-  set artist(artist) {
-    this._data.artist = artist;
+  set artist (artist) {
+    this._data.artist = artist
   }
 
   /**
    * Returns the artist who created this PXON.
    * @returns {string} The artist.
    */
-  get artist() {
-    return this._data.artist;
+  get artist () {
+    return this._data.artist
   }
 
   /**
    * Set the software who created this PXON.
    * @param {string} software
    */
-  set software(software) {
-    this._data.software = software;
+  set software (software) {
+    this._data.software = software
   }
 
   /**
    * Returns the software that created this PXON.
    * @returns {string}
    */
-  get software() {
-    return this._data.software;
+  get software () {
+    return this._data.software
   }
 
   /**
    * Set the imageDescription for this PXON.
    * @param {string} imageDescription
    */
-  set imageDescription(imageDescription) {
-    this._data.imageDescription = imageDescription;
+  set imageDescription (imageDescription) {
+    this._data.imageDescription = imageDescription
   }
 
   /**
    * Returns the imageDescription for this PXON.
    * @returns {string}
    */
-  get imageDescription() {
-    return this._data.imageDescription;
+  get imageDescription () {
+    return this._data.imageDescription
   }
 
   /**
    * Set the userComment for this PXON.
    * @param {string} userComment
    */
-  set userComment(userComment) {
-    this._data.userComment = userComment;
+  set userComment (userComment) {
+    this._data.userComment = userComment
   }
 
   /**
    * Returns the userComment for this PXON.
    * @returns {string}
    */
-  get userComment() {
-    return this._data.userComment;
+  get userComment () {
+    return this._data.userComment
   }
 
   /**
    * Set the copyright for this PXON.
    * @param {string} copyright
    */
-  set copyright(copyright) {
-    this._data.copyright = copyright;
+  set copyright (copyright) {
+    this._data.copyright = copyright
   }
 
   /**
    * Returns the copyright for this PXON.
    * @returns {string}
    */
-  get copyright() {
-    return this._data.copyright;
+  get copyright () {
+    return this._data.copyright
   }
 
   /**
    * Set the date of creation for this PXON.
    * @param {string} dateTime
    */
-  set dateTime(dateTime) {
-    this._data.dateTime = dateTime;
+  set dateTime (dateTime) {
+    this._data.dateTime = dateTime
   }
 
   /**
    * Returns the date of creation for this PXON.
    * @returns {string}
    */
-  get dateTime() {
-    return this._data.dateTime;
+  get dateTime () {
+    return this._data.dateTime
   }
 
   /**
    * Set the dataURL for this PXON.
    * @param {string} dataURL
    */
-  set dataURL(dataURL) {
-    this._data.dataURL = dataURL;
+  set dataURL (dataURL) {
+    this._data.dataURL = dataURL
   }
 
   /**
    * Returns the dataURL for this PXON.
    * @returns {string}
    */
-  get dataURL() {
-    return this._data.dataURL;
+  get dataURL () {
+    return this._data.dataURL
   }
 }
 
-export default PXON;
+export default PXON
