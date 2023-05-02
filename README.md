@@ -4,7 +4,7 @@
 
 > [Full API Documentation &rarr;](https://thematthewhudson.com/pxon/)
 
-[![Build Status](https://travis-ci.org/matthewhudson/pxon.svg?branch=master)](https://travis-ci.org/matthewhudson/pxon)
+![Main Workflow](https://github.com/matthewhudson/pxon/actions/workflows/main.yml/badge.svg)
 [![Coverage Status](https://codecov.io/github/matthewhudson/pxon/branch/main/graph/badge.svg?token=aOmuqvyy4J)](https://codecov.io/github/matthewhudson/pxon)
 [![NPM version](https://badge.fury.io/js/pxon.svg)](http://badge.fury.io/js/pxon)
 
