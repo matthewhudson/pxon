@@ -26,7 +26,7 @@
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "7.0.2",
-    "standard": "17.0.0"
+    "standard": "17.1.0"
   },
   "scripts": {
     "docs": "jsdoc -c .jsdoc.json --verbose",
