@@ -2,7 +2,7 @@
 
 > A JavaScript module for importing, creating, manipulating, and exporting PXON data.
 
-> [Full API Documentation &rarr;](https://thematthewhudson.com/pxon/)
+> [Full API Documentation &rarr;](https://matthewhudson.github.io/pxon/)
 
 ![Main Workflow](https://github.com/matthewhudson/pxon/actions/workflows/main.yml/badge.svg)
 [![Coverage Status](https://codecov.io/github/matthewhudson/pxon/branch/main/graph/badge.svg?token=aOmuqvyy4J)](https://codecov.io/github/matthewhudson/pxon)
@@ -65,7 +65,7 @@ for (let [key, pixel] of pxon.pixels) {
 console.log(pxon.export());
 ```
 
-### [Full API Documentation &rarr;](https://thematthewhudson.com/pxon/)
+### [Full API Documentation &rarr;](https://matthewhudson.github.io/pxon/)
 
 ## Additional Resources
 
