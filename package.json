@@ -14,8 +14,8 @@
   "author": "Matthew Hudson <matthud@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "7.21.3",
-    "@babel/preset-env": "7.20.2",
+    "@babel/core": "7.26.0",
+    "@babel/preset-env": "7.26.0",
     "babel-jest": "29.5.0",
     "codecov": "3.8.3",
     "cz-conventional-changelog": "3.3.0",
