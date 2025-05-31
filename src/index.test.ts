@@ -1,23 +1,22 @@
-import PXON from './'
+import { PXON } from './index'
 
 describe('PXON', () => {
-  let pxon
+  let pxon: PXON
 
   beforeEach(() => {
     pxon = new PXON()
   })
 
   it('should initialize with default properties', () => {
-    expect(pxon.name).toEqual('PXON')
-    expect(pxon._data).toEqual({
+    expect(pxon['_data']).toEqual({
       software: '',
       artist: '',
       imageDescription: '',
       userComment: '',
       copyright: '',
-      dateTime: ''
+      dateTime: '',
     })
-    expect(pxon.pixels).toBeInstanceOf(Map)
+    expect(pxon['pixels']).toBeInstanceOf(Map)
   })
 
   describe('import', () => {
@@ -29,7 +28,7 @@ describe('PXON', () => {
           imageDescription: 'TestDescription',
           userComment: 'TestComment',
           copyright: 'TestCopyright',
-          dateTime: 'TestDateTime'
+          dateTime: 'TestDateTime',
         },
         pxif: {
           pixels: [
@@ -37,17 +36,17 @@ describe('PXON', () => {
               x: 0,
               y: 0,
               color: 'rgba(255, 255, 255, 1)',
-              size: 1
+              size: 1,
             },
             {
               x: 1,
               y: 1,
               color: 'rgba(0, 0, 0, 1)',
-              size: 2
-            }
-          ]
+              size: 2,
+            },
+          ],
         },
-        dataURL: 'TestDataURL'
+        dataURL: 'TestDataURL',
       }
 
       pxon.import(data)
@@ -63,12 +62,37 @@ describe('PXON', () => {
         x: 1,
         y: 1,
         color: 'rgba(0, 0, 0, 1)',
-        size: 2
+        size: 2,
       }
 
       pxon.setPixel(pixel)
 
       expect(pxon.getPixel(pixel.x, pixel.y)).toEqual(pixel)
+    })
+  })
+
+  describe('getAllPixels', () => {
+    test('should get all pixels', () => {
+      const pxon = new PXON()
+      const pixels = [
+        {
+          x: 0,
+          y: 0,
+          color: 'rgba(255, 255, 255, 1)',
+          size: 1,
+        },
+        {
+          x: 1,
+          y: 1,
+          color: 'rgba(0, 0, 0, 1)',
+          size: 2,
+        },
+      ]
+
+      pixels.forEach(pixel => pxon.setPixel(pixel))
+
+      expect(pxon.getAllPixels()).toHaveLength(2)
+      expect(pxon.getAllPixels()).toEqual(expect.arrayContaining(pixels))
     })
   })
 
@@ -80,12 +104,14 @@ describe('PXON', () => {
       userComment: 'TestComment',
       copyright: 'TestCopyright',
       dateTime: 'TestDateTime',
-      dataURL: 'data:image/png;base64,TEST'
+      dataURL: 'data:image/png;base64,TEST',
     }
 
     for (const key in testData) {
       it(`should get and set ${key}`, () => {
+        // @ts-expect-error - Use of dynamic property access
         pxon[key] = testData[key]
+        // @ts-expect-error - Use of dynamic property access
         expect(pxon[key]).toEqual(testData[key])
       })
     }

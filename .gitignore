@@ -60,10 +60,21 @@ typings/
 # next.js build output
 .next
 
-# nwb
+# Build output
+/dist
 /coverage
-/demo/dist
 /es
 /lib
-/node_modules
 /umd
+
+# Editor and IDE files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.DS_Store
+
+# Changeset temporary files
+.changeset/*.md
+!.changeset/config.json
+!.changeset/initial-modernization.md

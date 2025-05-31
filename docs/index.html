@@ -1,133 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Home</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
-
-<body>
-
-<div id="main">
-
-    <h1 class="page-title">Home</h1>
-
-    
-
-
-
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-    <section>
-        <article><h1>PXON</h1>
-<blockquote>
-<p>A JavaScript module for importing, creating, manipulating, and exporting PXON data.</p>
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>pxon</title><meta name="description" content="Documentation for pxon"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">pxon</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>pxon</h1></div><div class="tsd-panel tsd-typography"><h1 id="pxon" class="tsd-anchor-link">PXON<a href="#pxon" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1><blockquote>
+<p>A TypeScript library for importing, creating, manipulating, and exporting PXON data.
+<a href="https://matthewhudson.github.io/pxon/">Full API Documentation →</a></p>
 </blockquote>
-<blockquote>
-<p><a href="https://thematthewhudson.com/pxon/">Full API Documentation →</a></p>
-</blockquote>
-<p><a href="https://travis-ci.org/matthewhudson/pxon"><img src="https://travis-ci.org/matthewhudson/pxon.svg?branch=master" alt="Build Status"></a>
-<a href="https://coveralls.io/github/matthewhudson/pxon?branch=master"><img src="https://coveralls.io/repos/github/matthewhudson/pxon/badge.svg?branch=master" alt="Coverage Status"></a>
+<p><img src="https://github.com/matthewhudson/pxon/actions/workflows/main.yml/badge.svg" alt="Main Workflow">
+<a href="https://codecov.io/github/matthewhudson/pxon"><img src="https://codecov.io/github/matthewhudson/pxon/branch/main/graph/badge.svg?token=aOmuqvyy4J" alt="Coverage Status"></a>
 <a href="http://badge.fury.io/js/pxon"><img src="https://badge.fury.io/js/pxon.svg" alt="NPM version"></a></p>
-<h2>Installation</h2>
-<pre class="prettyprint source lang-sh"><code>npm install pxon
-</code></pre>
-<p>And then import it:</p>
-<pre class="prettyprint source lang-js"><code>// using es modules
-import PXON from &quot;pxon&quot;;
+<h2 id="features" class="tsd-anchor-link">Features<a href="#features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>🌲 <strong>Tree-shakable</strong>: Import only what you need</li>
+<li>🔄 <strong>Multiple formats</strong>: ESM, CommonJS, and UMD bundles</li>
+<li>📊 <strong>Type-safe</strong>: Full TypeScript support with type definitions</li>
+<li>📱 <strong>Universal</strong>: Works in Node.js and browsers</li>
+</ul>
+<h2 id="installation" class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="sh"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">pxon</span>
+</code><button type="button">Copy</button></pre>
 
-// common.js
-const PXON = require(&quot;pxon&quot;).default;
+<h2 id="usage" class="tsd-anchor-link">Usage<a href="#usage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>PXON supports multiple import styles to fit your needs:</p>
+<h3 id="es-modules-recommended" class="tsd-anchor-link">ES Modules (Recommended)<a href="#es-modules-recommended" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">PXON</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;pxon&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">pxon</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">PXON</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
 
-// AMD
-// I've forgotten but it should work.
-</code></pre>
-<p>Or use script tags and globals.</p>
-<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://unpkg.com/pxon/umd/pxon.min.js&quot;>&lt;/script>
-</code></pre>
-<p>And then grab it off the global like so:</p>
-<pre class="prettyprint source lang-js"><code>const PXON = PXON.default;
-</code></pre>
-<h2>Example Usage</h2>
-<pre class="prettyprint source lang-js"><code>const PXON = require(&quot;pxon&quot;).default;
-const pxon = new PXON();
+<h3 id="commonjs" class="tsd-anchor-link">CommonJS<a href="#commonjs" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="js"><span class="hl-5">const</span><span class="hl-1"> { </span><span class="hl-6">PXON</span><span class="hl-1"> } = </span><span class="hl-0">require</span><span class="hl-1">(</span><span class="hl-2">&#39;pxon&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">pxon</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">PXON</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
 
-// Import PXON-formatted JSON.
-pxon.import({ ... });
+<h3 id="browser-via-cdn" class="tsd-anchor-link">Browser via CDN<a href="#browser-via-cdn" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="html"><span class="hl-7">&lt;!-- Production (minified) --&gt;</span><br/><span class="hl-8">&lt;</span><span class="hl-9">script</span><span class="hl-10"> </span><span class="hl-11">src</span><span class="hl-10">=</span><span class="hl-12">&quot;https://unpkg.com/pxon/dist/browser/pxon.min.js&quot;</span><span class="hl-8">&gt;&lt;/</span><span class="hl-9">script</span><span class="hl-8">&gt;</span><br/><br/><span class="hl-7">&lt;!-- Development (with helpful errors) --&gt;</span><br/><span class="hl-8">&lt;</span><span class="hl-9">script</span><span class="hl-10"> </span><span class="hl-11">src</span><span class="hl-10">=</span><span class="hl-12">&quot;https://unpkg.com/pxon/dist/browser/pxon.js&quot;</span><span class="hl-8">&gt;&lt;/</span><span class="hl-9">script</span><span class="hl-8">&gt;</span><br/><br/><span class="hl-8">&lt;</span><span class="hl-9">script</span><span class="hl-8">&gt;</span><br/><span class="hl-10">  </span><span class="hl-7">// The library is available as a global variable</span><br/><span class="hl-10">  </span><span class="hl-5">const</span><span class="hl-10"> </span><span class="hl-6">pxon</span><span class="hl-10"> </span><span class="hl-1">=</span><span class="hl-10"> </span><span class="hl-5">new</span><span class="hl-10"> </span><span class="hl-0">PXON</span><span class="hl-10">();</span><br/><span class="hl-8">&lt;/</span><span class="hl-9">script</span><span class="hl-8">&gt;</span>
+</code><button type="button">Copy</button></pre>
 
-// Set some EXIF data.
-pxon.artist = &quot;Matthew Hudson&quot;;
-pxon.software = &quot;https://make8bitart.com/&quot;;
+<h2 id="example-usage" class="tsd-anchor-link">Example Usage<a href="#example-usage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">PXON</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;pxon&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">pxon</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">PXON</span><span class="hl-1">();</span><br/><br/><span class="hl-7">// Import PXON-formatted JSON.</span><br/><span class="hl-4">pxon</span><span class="hl-1">.</span><span class="hl-0">import</span><span class="hl-1">({ </span><br/><span class="hl-1">  </span><span class="hl-4">exif:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-4">artist:</span><span class="hl-1"> </span><span class="hl-2">&#39;Matthew Hudson&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">software:</span><span class="hl-1"> </span><span class="hl-2">&#39;https://make8bitart.com/&#39;</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">pxif:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-4">pixels:</span><span class="hl-1"> []</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-7">// Set some EXIF data.</span><br/><span class="hl-4">pxon</span><span class="hl-1">.</span><span class="hl-4">artist</span><span class="hl-1"> = </span><span class="hl-2">&#39;Matthew Hudson&#39;</span><span class="hl-1">;</span><br/><span class="hl-4">pxon</span><span class="hl-1">.</span><span class="hl-4">software</span><span class="hl-1"> = </span><span class="hl-2">&#39;https://make8bitart.com/&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">// Set a single pixel&#39;s value.</span><br/><span class="hl-4">pxon</span><span class="hl-1">.</span><span class="hl-0">setPixel</span><span class="hl-1">({ </span><span class="hl-4">x:</span><span class="hl-1"> </span><span class="hl-13">0</span><span class="hl-1">, </span><span class="hl-4">y:</span><span class="hl-1"> </span><span class="hl-13">0</span><span class="hl-1">, </span><span class="hl-4">color:</span><span class="hl-1"> </span><span class="hl-2">&#39;rgba(0, 0, 0, 1)&#39;</span><span class="hl-1">, </span><span class="hl-4">size:</span><span class="hl-1"> </span><span class="hl-13">1</span><span class="hl-1"> });</span><br/><br/><span class="hl-7">// Get all pixels as an array</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">allPixels</span><span class="hl-1"> = </span><span class="hl-4">pxon</span><span class="hl-1">.</span><span class="hl-0">getAllPixels</span><span class="hl-1">();</span><br/><br/><span class="hl-7">// Get a specific pixel</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">pixel</span><span class="hl-1"> = </span><span class="hl-4">pxon</span><span class="hl-1">.</span><span class="hl-0">getPixel</span><span class="hl-1">(</span><span class="hl-13">0</span><span class="hl-1">, </span><span class="hl-13">0</span><span class="hl-1">);</span><br/><br/><span class="hl-7">// Returns a PXON-formatted object.</span><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">pxon</span><span class="hl-1">.</span><span class="hl-0">export</span><span class="hl-1">());</span>
+</code><button type="button">Copy</button></pre>
 
-// Set a single pixel's value.
-pxon.setPixel(x, y, color, size);
-
-// Iterate over an ES6 HashMap of all pixels.
-for (let [key, pixel] of pxon.pixels) {
-  console.log(`${key}, ${pixel}`);
-  // &lt;- 0:0, { x: 0, y: 0, size: 1, color: 'rgba(0, 0, 0, 1)' }
-}
-
-// Returns a PXON-formatted object.
-console.log(pxon.export());
-</code></pre>
-<h3><a href="https://thematthewhudson.com/pxon/">Full API Documentation →</a></h3>
-<h2>Additional Resources</h2>
-<ul>
+<h3 id="full-api-documentation-→" class="tsd-anchor-link"><a href="https://matthewhudson.github.io/pxon/">Full API Documentation →</a><a href="#full-api-documentation-→" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><h2 id="additional-resources" class="tsd-anchor-link">Additional Resources<a href="#additional-resources" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
 <li><a href="http://jennmoney.biz/pxon/">PXON Specification</a> - specs for the &quot;pixel art object notation&quot; format</li>
 <li><a href="https://make8bitart.com/">make8bitart.com</a> - pixel art painting app</li>
 <li><a href="http://pxonloop.glitch.me/">pxonloop</a> - a pxon playground</li>
 <li><a href="http://image-to-pxon.glitch.me/">image-to-pxon</a> - app that converts image to pxon</li>
 </ul>
-<h2>Notes</h2>
-<ul>
+<h2 id="notes" class="tsd-anchor-link">Notes<a href="#notes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
 <li>The non-canonical <code>dataURL</code> field is not currently supported.</li>
 <li>The non-canonical <code>size</code> field defaults to <code>1</code>.</li>
-</ul></article>
-    </section>
-
-
-
-
-
-
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="PXON.html">PXON</a></li></ul>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Mar 23 2023 09:55:39 GMT-0400 (Eastern Daylight Time)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
-</html>
+</ul>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#pxon"><span>PXON</span></a><ul><li><a href="#features"><span>Features</span></a></li><li><a href="#installation"><span>Installation</span></a></li><li><a href="#usage"><span>Usage</span></a></li><li><ul><li><a href="#es-modules-recommended"><span>ES <wbr/>Modules (<wbr/>Recommended)</span></a></li><li><a href="#commonjs"><span>Common<wbr/>JS</span></a></li><li><a href="#browser-via-cdn"><span>Browser via <wbr/>CDN</span></a></li></ul></li><li><a href="#example-usage"><span>Example <wbr/>Usage</span></a></li><li><ul><li><a href="#full-api-documentation-→"><span>Full <wbr/>API <wbr/>Documentation →</span></a></li></ul></li><li><a href="#additional-resources"><span>Additional <wbr/>Resources</span></a></li><li><a href="#notes"><span>Notes</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html">pxon</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

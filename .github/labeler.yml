@@ -1,0 +1,27 @@
+# Configuration for the GitHub Labeler Action
+# https://github.com/actions/labeler
+
+# Add 'source' label to any change to src files
+source:
+  - src/**/*
+
+# Add 'test' label to any change to test files
+test:
+  - src/**/*.test.ts
+  - '**/*.spec.ts'
+
+# Add 'documentation' label to any change to documentation files
+documentation:
+  - docs/**/*
+  - '**/*.md'
+
+# Add 'build' label to any change to build configuration
+build:
+  - tsconfig.json
+  - rollup.config.js
+  - package.json
+  - '**/*.json'
+
+# Add 'github-actions' label to any change to .github files
+github-actions:
+  - .github/**/*
