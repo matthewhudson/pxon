@@ -1,6 +1,6 @@
 {
   "name": "pxon",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "homepage": "https://github.com/matthewhudson/pxon",
   "description": "A library for handling pixel data in a standardized format",
