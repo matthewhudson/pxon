@@ -1,7 +1,6 @@
 # PXON
 
 > A TypeScript library for importing, creating, manipulating, and exporting PXON data.
-> [Full API Documentation &rarr;](https://matthewhudson.github.io/pxon/)
 
 [![npm version](https://badge.fury.io/js/pxon.svg)](https://badge.fury.io/js/pxon)
 [![npm downloads](https://img.shields.io/npm/dm/pxon.svg)](https://www.npmjs.com/package/pxon)
