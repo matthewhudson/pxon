@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  workflow_dispatch: # Manual trigger
+  push:
+    branches:
+      - main
+    paths:
+      - '.changeset/**'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.x
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@matthewhudson'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Version and Create GitHub Release
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          
+          # Apply version changes
+          npx changeset version
+          
+          # Get version from package.json
+          VERSION=$(node -p "require('./package.json').version")
+          
+          # Extract changes from the latest changeset
+          CHANGESET_CONTENT=$(find .changeset -name "*.md" -not -name "README.md" -type f -exec cat {} \;)
+          
+          # Commit version changes
+          git add .
+          git commit -m "chore(release): version $VERSION"
+          git tag -a "v$VERSION" -m "Release v$VERSION"
+          git push --follow-tags
+          
+          # Create GitHub Release
+          npx conventional-changelog-cli -p angular -i CHANGELOG.md -s
+          gh release create "v$VERSION" --title "v$VERSION" --notes "$CHANGESET_CONTENT" --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}"
