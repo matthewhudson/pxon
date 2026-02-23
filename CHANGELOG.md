@@ -1,11 +1,16 @@
 # pxon
 
+## 2.0.0
+
+### Major Changes
+
+- 543d56a: Modernize toolchain: pnpm, tsup, and Vitest replace npm, Rollup, and Jest. IIFE browser builds removed in favor of ESM via CDN.
+
 ## 1.0.0
 
 ### Major Changes
 
 - faa24f4: # Modernized library with TypeScript, latest dependencies, and improved documentation
-
   - Converted to TypeScript
   - Updated to Node 20 LTS
   - Added strict typing
