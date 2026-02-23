@@ -3,353 +3,774 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PXON NPM Module Demo</title>
+    <title>PXON — Pixel Object Notation</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
     <style>
+      :root {
+        --bg-deep: #0a0a2e;
+        --window-bg: #1a1a4e;
+        --window-border-light: #8888ff;
+        --window-border-dark: #1a1a3e;
+        --text-primary: #e8e8e8;
+        --text-gold: #ffd700;
+        --text-green: #68ff68;
+        --code-bg: #0d0d2d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      ::selection {
+        background: var(--text-gold);
+        color: #000;
+      }
+
       body {
-        font-family:
-          'Inter',
-          -apple-system,
-          BlinkMacSystemFont,
-          'Segoe UI',
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          'Open Sans',
-          'Helvetica Neue',
-          sans-serif;
-        line-height: 1.6;
-        color: #333;
-        max-width: 1200px;
+        font-family: 'Press Start 2P', cursive;
+        background-color: var(--bg-deep);
+        color: var(--text-primary);
+        max-width: 900px;
         margin: 0 auto;
         padding: 20px;
-        background-color: #f7fafc; /* Light gray background */
+        line-height: 2;
+        font-size: 12px;
+        position: relative;
       }
-      header {
+
+      body::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.15) 0px,
+          rgba(0, 0, 0, 0.15) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+      }
+
+      /* RPG Dialog Box */
+      .rpg-box {
+        background: var(--window-bg);
+        border: 4px solid var(--window-border-light);
+        outline: 4px solid var(--window-border-dark);
+        box-shadow:
+          inset 0 0 0 2px var(--window-border-dark),
+          0 0 0 2px #000;
+        padding: 24px;
+        margin-bottom: 24px;
+      }
+
+      .rpg-box h2 {
+        color: var(--text-gold);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+
+      .rpg-box p {
+        color: var(--text-primary);
+        line-height: 2;
+        font-size: 11px;
+      }
+
+      .rpg-link {
+        color: var(--text-gold);
+        text-decoration: none;
+        display: inline-block;
+        transition: text-shadow 0.2s;
+      }
+
+      .rpg-link:hover {
+        text-shadow: 0 0 8px var(--text-gold);
+      }
+
+      .rpg-link::before {
+        content: '\25B6  ';
+      }
+
+      .rpg-btn {
+        font-family: 'Press Start 2P', cursive;
+        color: var(--text-gold);
+        background: var(--bg-deep);
+        border: 3px solid var(--window-border-light);
+        padding: 12px 20px;
+        cursor: pointer;
+        font-size: 12px;
+        text-shadow: 2px 2px 0 #000;
+        transition: text-shadow 0.2s, box-shadow 0.2s;
+      }
+
+      .rpg-btn:hover {
+        text-shadow: 0 0 10px var(--text-gold), 2px 2px 0 #000;
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+      }
+
+      /* Hero */
+      .hero {
         text-align: center;
-        margin-bottom: 40px;
+        padding: 60px 0 30px;
       }
-      h1 {
-        color: #2d3748; /* Darker heading */
+
+      .hero h1 {
+        font-size: 2rem;
+        color: var(--text-gold);
+        text-shadow:
+          0 0 10px rgba(255, 215, 0, 0.5),
+          3px 3px 0 #000;
+        margin-bottom: 12px;
       }
-      .container {
+
+      .tagline {
+        font-size: 12px;
+        color: #aaaacc;
+        letter-spacing: 2px;
+      }
+
+      /* Info box links */
+      .info-links {
+        margin-top: 16px;
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 10px;
       }
-      .example {
-        border: 1px solid #e2e8f0; /* Softer border */
-        border-radius: 8px;
-        padding: 25px; /* Increased padding */
-        background-color: #ffffff; /* White background for examples */
-        box-shadow:
-          0 4px 6px -1px rgba(0, 0, 0, 0.1),
-          0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Subtle shadow */
-      }
-      .example-header {
+
+      /* Examples grid */
+      .examples-grid {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px; /* Reduced margin as details/summary adds some */
+        gap: 24px;
+        flex-wrap: wrap;
       }
-      .example-title {
-        font-size: 1.25rem; /* Slightly larger title */
-        font-weight: 500; /* Medium weight */
-        color: #4a5568;
+
+      .examples-grid .rpg-box {
+        flex: 1 1 380px;
+        min-width: 300px;
       }
-      .visualization {
-        display: flex;
-        flex-direction: column; /* Stack title and grid */
-        gap: 15px; /* Gap between title and grid */
-        align-items: flex-start; /* Align to start */
-        margin-top: 15px;
-      }
-      .pixel-grid-container h3 {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #4a5568;
-        margin-bottom: 10px;
-      }
+
       .pixel-grid {
-        border: 1px solid #cbd5e0;
-        display: inline-block; /* Keep inline-block for natural sizing */
-        background-color: #fdfdfd; /* Light background for the grid itself */
+        border: 2px solid var(--window-border-light);
+        box-sizing: content-box;
+        display: inline-block;
+        margin: 16px auto;
+        background: transparent;
       }
+
+      .pixel-grid-wrap {
+        text-align: center;
+      }
+
       .pixel {
-        width: 20px;
-        height: 20px;
-        float: left; /* Keep float for pixel layout */
-        box-sizing: border-box; /* Include border in size */
+        width: 16px;
+        height: 16px;
+        float: left;
+        box-sizing: border-box;
       }
-      pre {
-        background-color: #2d3748; /* Dark background for code */
-        color: #e2e8f0; /* Light text for code */
-        padding: 15px;
-        border-radius: 6px;
-        overflow-x: auto;
-        font-size: 14px;
-        line-height: 1.4; /* Improved line height for code */
-        margin-top: 10px; /* Add some space above the pre block */
+
+      /* Details / JSON toggle */
+      details {
+        margin-top: 16px;
       }
-      .controls {
-        /* margin-top: 15px; No longer needed here as it's part of example-header */
-      }
-      button {
-        background-color: #4299e1; /* Blue button */
-        color: white;
-        border: none;
-        padding: 10px 18px; /* Slightly larger padding */
-        border-radius: 6px; /* More rounded */
+
+      details summary {
+        font-family: 'Press Start 2P', cursive;
+        color: var(--text-gold);
+        font-size: 10px;
         cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        margin-left: 10px; /* Use margin-left if it's the only button or for spacing */
-        transition: background-color 0.2s ease-in-out;
+        padding: 8px 0;
+        outline: none;
+        list-style: none;
+        transition: text-shadow 0.2s;
       }
-      button:hover {
-        background-color: #3182ce; /* Darker blue on hover */
+
+      details summary::-webkit-details-marker {
+        display: none;
       }
+
+      details summary::before {
+        content: '\25B6  ';
+      }
+
+      details[open] summary::before {
+        content: '\25BC  ';
+      }
+
+      details summary:hover {
+        text-shadow: 0 0 8px var(--text-gold);
+      }
+
+      pre {
+        background: var(--code-bg);
+        color: var(--text-green);
+        font-family: monospace;
+        font-size: 12px;
+        padding: 16px;
+        overflow-x: auto;
+        line-height: 1.5;
+        border: 2px solid var(--window-border-dark);
+        margin-top: 8px;
+      }
+
+      /* Custom input section */
       textarea#custom-input {
         width: 100%;
         font-family: monospace;
-        padding: 10px;
-        border-radius: 6px;
-        border: 1px solid #cbd5e0;
-        box-sizing: border-box; /* Ensure padding and border are included in width */
-        margin-bottom: 10px; /* Space before message area */
+        font-size: 13px;
+        padding: 12px;
+        background: var(--code-bg);
+        color: var(--text-green);
+        border: 3px solid var(--window-border-light);
+        resize: vertical;
+        margin-bottom: 12px;
       }
+
+      textarea#custom-input::placeholder {
+        color: #5566aa;
+      }
+
+      textarea#custom-input:focus {
+        outline: none;
+        box-shadow: 0 0 8px rgba(136, 136, 255, 0.4);
+      }
+
       .message-area {
         margin-top: 10px;
-        padding: 12px 15px;
-        border-radius: 6px;
-        font-size: 14px;
-        display: none; /* Hidden by default */
+        padding: 12px 16px;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 10px;
+        line-height: 1.8;
+        display: none;
       }
+
       .message-area.success {
-        background-color: #c6f6d5; /* Green for success */
-        color: #2f855a;
-        border: 1px solid #68d391;
+        background: rgba(104, 255, 104, 0.1);
+        color: var(--text-green);
+        border: 2px solid var(--text-green);
       }
+
       .message-area.error {
-        background-color: #fed7d7; /* Red for error */
-        color: #c53030;
-        border: 1px solid #f56565;
+        background: rgba(255, 100, 100, 0.1);
+        color: #ff6666;
+        border: 2px solid #ff6666;
       }
-      .info {
-        margin-top: 40px;
-        padding: 20px;
-        background-color: #ebf8ff; /* Light blue for info box */
-        border-radius: 8px;
-        border: 1px solid #bee3f8;
+
+      .btn-wrap {
+        margin-bottom: 12px;
       }
-      .info p {
-        /* Add some margin between paragraphs in the info section */
-        margin-bottom: 10px;
-      }
-      .info p:last-child {
-        margin-bottom: 0;
-      }
-      a {
-        color: #4299e1;
-        text-decoration: none;
-        font-weight: 500;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      details {
-        margin-top: 15px;
-        border: 1px solid #e2e8f0;
-        border-radius: 6px;
-        padding: 0; /* Remove padding from details itself */
-      }
-      details summary {
-        padding: 10px 15px;
-        font-weight: 500;
-        color: #4a5568;
-        background-color: #f8fafc;
-        border-radius: 6px 6px 0 0; /* Round top corners if details is open */
-        cursor: pointer;
-        outline: none;
-      }
-      details[open] summary {
-        border-bottom: 1px solid #e2e8f0;
-      }
-      details pre {
-        margin-top: 0; /* Remove margin-top for pre inside details */
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
+
+      /* Responsive */
+      @media (max-width: 700px) {
+        .hero h1 {
+          font-size: 1.2rem;
+        }
+
+        .rpg-box {
+          padding: 16px;
+        }
+
+        .examples-grid {
+          flex-direction: column;
+        }
+
+        .examples-grid .rpg-box {
+          min-width: 0;
+        }
+
+        body {
+          padding: 12px;
+        }
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>PXON NPM Module Demo</h1>
-      <div class="info">
-        <p>
-          PXON (Pixel Object Notation) is a JSON-based format for describing pixel art. It provides a structured way to represent pixel-based images with additional metadata.
-        </p>
-        <p>
-          This page is a demo of the <a href="https://github.com/matthewhudson/pxon" target="_blank">PXON NPM module</a>, a JavaScript library for importing, creating, manipulating, and exporting PXON data. For more information and examples, visit the official specification site: <a href="https://jennmoney.biz/pxon" target="_blank">jennmoney.biz/pxon</a>.
-        </p>
-      </div>
-    </header>
+    <div class="hero">
+      <h1>&#9733; P X O N &#9733;</h1>
+      <p class="tagline">Pixel Object Notation</p>
+    </div>
 
-    <div class="container">
-      <div class="example">
-        <div class="example-header">
-          <div class="example-title">Basic PXON Example</div>
-          <div class="controls">
-            <button onclick="renderExample('basic')">Visualize</button>
-          </div>
+    <div class="rpg-box">
+      <h2>Quest Log</h2>
+      <p>
+        PXON (Pixel Object Notation) is a JSON-based format for describing pixel art.
+        It provides a structured way to represent pixel-based images with metadata,
+        import/export, and manipulation tools.
+      </p>
+      <div class="info-links">
+        <a class="rpg-link" href="https://github.com/matthewhudson/pxon" target="_blank">View on GitHub</a>
+        <a class="rpg-link" href="https://jennmoney.biz/pxon" target="_blank">PXON Specification</a>
+      </div>
+    </div>
+
+    <div class="examples-grid">
+      <div class="rpg-box">
+        <h2>Mario</h2>
+        <div class="pixel-grid-wrap">
+          <div id="mario-grid" class="pixel-grid"></div>
         </div>
         <details>
           <summary>View PXON JSON</summary>
-          <pre id="basic-json"></pre>
+          <pre id="mario-json"></pre>
         </details>
-        <div class="visualization">
-          <div class="pixel-grid-container">
-            <h3>Pixel Visualization</h3>
-            <div id="basic-grid" class="pixel-grid"></div>
-          </div>
-        </div>
       </div>
 
-      <div class="example">
-        <div class="example-header">
-          <div class="example-title">Heart PXON Example</div>
-          <div class="controls">
-            <button onclick="renderExample('heart')">Visualize</button>
-          </div>
+      <div class="rpg-box">
+        <h2>1-Up Mushroom</h2>
+        <div class="pixel-grid-wrap">
+          <div id="mushroom-grid" class="pixel-grid"></div>
         </div>
         <details>
           <summary>View PXON JSON</summary>
-          <pre id="heart-json"></pre>
+          <pre id="mushroom-json"></pre>
         </details>
-        <div class="visualization">
-          <div class="pixel-grid-container">
-            <h3>Pixel Visualization</h3>
-            <div id="heart-grid" class="pixel-grid"></div>
-          </div>
-        </div>
       </div>
+    </div>
 
-      <div class="example">
-        <div class="example-header">
-          <div class="example-title">Custom PXON Input</div>
-          <div class="controls">
-            <button onclick="renderCustom()">Visualize</button>
-          </div>
-        </div>
-        <textarea
-          id="custom-input"
-          rows="12"
-          placeholder="Paste your PXON JSON (or JSON-like text with comments) here..."
-        ></textarea>
-        <div id="custom-message-area" class="message-area"></div>
-        <div class="visualization">
-          <div class="pixel-grid-container">
-            <h3>Pixel Visualization</h3>
-            <div id="custom-grid" class="pixel-grid"></div>
-          </div>
-        </div>
+    <div class="rpg-box">
+      <h2>Custom Input</h2>
+      <textarea
+        id="custom-input"
+        rows="12"
+        placeholder="Paste your PXON JSON here..."
+      ></textarea>
+      <div class="btn-wrap">
+        <button class="rpg-btn" onclick="renderCustom()">VISUALIZE</button>
+      </div>
+      <div id="custom-message-area" class="message-area"></div>
+      <div class="pixel-grid-wrap">
+        <div id="custom-grid" class="pixel-grid"></div>
       </div>
     </div>
 
     <script type="module">
-      // To use the PXON library in your own project:
-      // import { PXON } from 'https://esm.sh/pxon'
-
-      // Example PXON data
       const examples = {
-        basic: {
+        mario: {
           pxon: {
             version: '1.0',
-            title: 'Simple Square',
-            description: 'A basic 3x3 square example',
-            width: 3,
-            height: 3,
+            title: 'Mario',
+            description: 'Classic standing Mario sprite',
+            width: 16,
+            height: 16,
             colors: {
-              r: '#FF0000',
-              b: '#0000FF',
+              R: '#E52521',
+              B: '#0038A8',
+              S: '#FFB580',
+              H: '#6B3304',
+              Y: '#FBD000',
             },
             pixels: [
-              { x: 0, y: 0, color: 'r' },
-              { x: 1, y: 0, color: 'r' },
-              { x: 2, y: 0, color: 'r' },
-              { x: 0, y: 1, color: 'b' },
-              { x: 1, y: 1, color: 'b' },
-              { x: 2, y: 1, color: 'b' },
-              { x: 0, y: 2, color: 'r' },
-              { x: 1, y: 2, color: 'r' },
-              { x: 2, y: 2, color: 'r' },
+              // Row 0: top of cap
+              { x: 5, y: 0, color: 'R' },
+              { x: 6, y: 0, color: 'R' },
+              { x: 7, y: 0, color: 'R' },
+              { x: 8, y: 0, color: 'R' },
+              { x: 9, y: 0, color: 'R' },
+
+              // Row 1: cap widens
+              { x: 4, y: 1, color: 'R' },
+              { x: 5, y: 1, color: 'R' },
+              { x: 6, y: 1, color: 'R' },
+              { x: 7, y: 1, color: 'R' },
+              { x: 8, y: 1, color: 'R' },
+              { x: 9, y: 1, color: 'R' },
+              { x: 10, y: 1, color: 'R' },
+              { x: 11, y: 1, color: 'R' },
+              { x: 12, y: 1, color: 'R' },
+
+              // Row 2: hair line + face start
+              { x: 4, y: 2, color: 'H' },
+              { x: 5, y: 2, color: 'H' },
+              { x: 6, y: 2, color: 'H' },
+              { x: 7, y: 2, color: 'S' },
+              { x: 8, y: 2, color: 'S' },
+              { x: 9, y: 2, color: 'S' },
+              { x: 10, y: 2, color: 'H' },
+              { x: 11, y: 2, color: 'S' },
+
+              // Row 3: face with eyes
+              { x: 3, y: 3, color: 'H' },
+              { x: 4, y: 3, color: 'S' },
+              { x: 5, y: 3, color: 'H' },
+              { x: 6, y: 3, color: 'S' },
+              { x: 7, y: 3, color: 'S' },
+              { x: 8, y: 3, color: 'S' },
+              { x: 9, y: 3, color: 'H' },
+              { x: 10, y: 3, color: 'S' },
+              { x: 11, y: 3, color: 'S' },
+              { x: 12, y: 3, color: 'S' },
+
+              // Row 4: face with nose/mustache
+              { x: 3, y: 4, color: 'H' },
+              { x: 4, y: 4, color: 'S' },
+              { x: 5, y: 4, color: 'H' },
+              { x: 6, y: 4, color: 'H' },
+              { x: 7, y: 4, color: 'S' },
+              { x: 8, y: 4, color: 'S' },
+              { x: 9, y: 4, color: 'S' },
+              { x: 10, y: 4, color: 'H' },
+              { x: 11, y: 4, color: 'S' },
+              { x: 12, y: 4, color: 'S' },
+              { x: 13, y: 4, color: 'S' },
+
+              // Row 5: chin/face bottom
+              { x: 3, y: 5, color: 'H' },
+              { x: 4, y: 5, color: 'H' },
+              { x: 5, y: 5, color: 'S' },
+              { x: 6, y: 5, color: 'S' },
+              { x: 7, y: 5, color: 'S' },
+              { x: 8, y: 5, color: 'S' },
+              { x: 9, y: 5, color: 'H' },
+              { x: 10, y: 5, color: 'H' },
+              { x: 11, y: 5, color: 'H' },
+              { x: 12, y: 5, color: 'H' },
+
+              // Row 6: shirt top
+              { x: 5, y: 6, color: 'R' },
+              { x: 6, y: 6, color: 'R' },
+              { x: 7, y: 6, color: 'B' },
+              { x: 8, y: 6, color: 'R' },
+              { x: 9, y: 6, color: 'R' },
+              { x: 10, y: 6, color: 'B' },
+
+              // Row 7: arms + shirt
+              { x: 4, y: 7, color: 'R' },
+              { x: 5, y: 7, color: 'R' },
+              { x: 6, y: 7, color: 'R' },
+              { x: 7, y: 7, color: 'B' },
+              { x: 8, y: 7, color: 'R' },
+              { x: 9, y: 7, color: 'R' },
+              { x: 10, y: 7, color: 'B' },
+              { x: 11, y: 7, color: 'R' },
+              { x: 12, y: 7, color: 'R' },
+              { x: 13, y: 7, color: 'R' },
+
+              // Row 8: arms + overalls
+              { x: 3, y: 8, color: 'S' },
+              { x: 4, y: 8, color: 'R' },
+              { x: 5, y: 8, color: 'R' },
+              { x: 6, y: 8, color: 'R' },
+              { x: 7, y: 8, color: 'B' },
+              { x: 8, y: 8, color: 'B' },
+              { x: 9, y: 8, color: 'B' },
+              { x: 10, y: 8, color: 'B' },
+              { x: 11, y: 8, color: 'R' },
+              { x: 12, y: 8, color: 'R' },
+              { x: 13, y: 8, color: 'R' },
+              { x: 14, y: 8, color: 'S' },
+
+              // Row 9: hands + overalls with buttons
+              { x: 2, y: 9, color: 'S' },
+              { x: 3, y: 9, color: 'S' },
+              { x: 4, y: 9, color: 'R' },
+              { x: 5, y: 9, color: 'R' },
+              { x: 6, y: 9, color: 'B' },
+              { x: 7, y: 9, color: 'Y' },
+              { x: 8, y: 9, color: 'B' },
+              { x: 9, y: 9, color: 'B' },
+              { x: 10, y: 9, color: 'Y' },
+              { x: 11, y: 9, color: 'B' },
+              { x: 12, y: 9, color: 'R' },
+              { x: 13, y: 9, color: 'S' },
+              { x: 14, y: 9, color: 'S' },
+
+              // Row 10: overalls mid
+              { x: 2, y: 10, color: 'S' },
+              { x: 3, y: 10, color: 'S' },
+              { x: 4, y: 10, color: 'S' },
+              { x: 5, y: 10, color: 'B' },
+              { x: 6, y: 10, color: 'B' },
+              { x: 7, y: 10, color: 'B' },
+              { x: 8, y: 10, color: 'B' },
+              { x: 9, y: 10, color: 'B' },
+              { x: 10, y: 10, color: 'B' },
+              { x: 11, y: 10, color: 'B' },
+              { x: 12, y: 10, color: 'S' },
+              { x: 13, y: 10, color: 'S' },
+
+              // Row 11: overalls bottom
+              { x: 5, y: 11, color: 'B' },
+              { x: 6, y: 11, color: 'B' },
+              { x: 7, y: 11, color: 'B' },
+              { x: 8, y: 11, color: 'B' },
+              { x: 9, y: 11, color: 'B' },
+              { x: 10, y: 11, color: 'B' },
+              { x: 11, y: 11, color: 'B' },
+
+              // Row 12: legs split
+              { x: 4, y: 12, color: 'H' },
+              { x: 5, y: 12, color: 'H' },
+              { x: 6, y: 12, color: 'H' },
+              { x: 10, y: 12, color: 'H' },
+              { x: 11, y: 12, color: 'H' },
+              { x: 12, y: 12, color: 'H' },
+
+              // Row 13: shoes
+              { x: 3, y: 13, color: 'H' },
+              { x: 4, y: 13, color: 'H' },
+              { x: 5, y: 13, color: 'H' },
+              { x: 6, y: 13, color: 'H' },
+              { x: 10, y: 13, color: 'H' },
+              { x: 11, y: 13, color: 'H' },
+              { x: 12, y: 13, color: 'H' },
+              { x: 13, y: 13, color: 'H' },
             ],
           },
         },
-        heart: {
+        mushroom: {
           pxon: {
             version: '1.0',
-            title: 'Pixel Heart',
-            description: 'A simple pixel heart',
-            width: 8,
-            height: 8,
+            title: '1-Up Mushroom',
+            description: 'Classic 1-Up mushroom from Super Mario Bros',
+            width: 16,
+            height: 16,
             colors: {
-              r: '#FF0000', // Red
-              p: '#FF69B4', // Pink
+              G: '#00A800',
+              W: '#FFFFFF',
+              T: '#FFCC99',
+              K: '#000000',
+              E: '#FFE0BD',
             },
             pixels: [
-              { x: 1, y: 0, color: 'r' },
-              { x: 2, y: 0, color: 'r' },
-              { x: 5, y: 0, color: 'r' },
-              { x: 6, y: 0, color: 'r' },
-              { x: 0, y: 1, color: 'r' },
-              { x: 1, y: 1, color: 'p' },
-              { x: 2, y: 1, color: 'p' },
-              { x: 3, y: 1, color: 'r' },
-              { x: 4, y: 1, color: 'r' },
-              { x: 5, y: 1, color: 'p' },
-              { x: 6, y: 1, color: 'p' },
-              { x: 7, y: 1, color: 'r' },
-              { x: 0, y: 2, color: 'r' },
-              { x: 1, y: 2, color: 'p' },
-              { x: 2, y: 2, color: 'p' },
-              { x: 3, y: 2, color: 'p' },
-              { x: 4, y: 2, color: 'p' },
-              { x: 5, y: 2, color: 'p' },
-              { x: 6, y: 2, color: 'p' },
-              { x: 7, y: 2, color: 'r' },
-              { x: 1, y: 3, color: 'r' },
-              { x: 2, y: 3, color: 'p' },
-              { x: 3, y: 3, color: 'p' },
-              { x: 4, y: 3, color: 'p' },
-              { x: 5, y: 3, color: 'p' },
-              { x: 6, y: 3, color: 'r' },
-              { x: 2, y: 4, color: 'r' },
-              { x: 3, y: 4, color: 'p' },
-              { x: 4, y: 4, color: 'p' },
-              { x: 5, y: 4, color: 'r' },
-              { x: 3, y: 5, color: 'r' },
-              { x: 4, y: 5, color: 'r' },
+              // Row 0: top outline of dome
+              { x: 5, y: 0, color: 'K' },
+              { x: 6, y: 0, color: 'K' },
+              { x: 7, y: 0, color: 'K' },
+              { x: 8, y: 0, color: 'K' },
+              { x: 9, y: 0, color: 'K' },
+              { x: 10, y: 0, color: 'K' },
+
+              // Row 1: dome widens
+              { x: 3, y: 1, color: 'K' },
+              { x: 4, y: 1, color: 'K' },
+              { x: 5, y: 1, color: 'W' },
+              { x: 6, y: 1, color: 'W' },
+              { x: 7, y: 1, color: 'G' },
+              { x: 8, y: 1, color: 'G' },
+              { x: 9, y: 1, color: 'W' },
+              { x: 10, y: 1, color: 'W' },
+              { x: 11, y: 1, color: 'K' },
+              { x: 12, y: 1, color: 'K' },
+
+              // Row 2
+              { x: 2, y: 2, color: 'K' },
+              { x: 3, y: 2, color: 'W' },
+              { x: 4, y: 2, color: 'W' },
+              { x: 5, y: 2, color: 'W' },
+              { x: 6, y: 2, color: 'G' },
+              { x: 7, y: 2, color: 'G' },
+              { x: 8, y: 2, color: 'G' },
+              { x: 9, y: 2, color: 'G' },
+              { x: 10, y: 2, color: 'W' },
+              { x: 11, y: 2, color: 'W' },
+              { x: 12, y: 2, color: 'W' },
+              { x: 13, y: 2, color: 'K' },
+
+              // Row 3
+              { x: 1, y: 3, color: 'K' },
+              { x: 2, y: 3, color: 'G' },
+              { x: 3, y: 3, color: 'W' },
+              { x: 4, y: 3, color: 'W' },
+              { x: 5, y: 3, color: 'G' },
+              { x: 6, y: 3, color: 'G' },
+              { x: 7, y: 3, color: 'G' },
+              { x: 8, y: 3, color: 'G' },
+              { x: 9, y: 3, color: 'G' },
+              { x: 10, y: 3, color: 'G' },
+              { x: 11, y: 3, color: 'W' },
+              { x: 12, y: 3, color: 'W' },
+              { x: 13, y: 3, color: 'G' },
+              { x: 14, y: 3, color: 'K' },
+
+              // Row 4
+              { x: 1, y: 4, color: 'K' },
+              { x: 2, y: 4, color: 'G' },
+              { x: 3, y: 4, color: 'G' },
+              { x: 4, y: 4, color: 'W' },
+              { x: 5, y: 4, color: 'G' },
+              { x: 6, y: 4, color: 'G' },
+              { x: 7, y: 4, color: 'W' },
+              { x: 8, y: 4, color: 'W' },
+              { x: 9, y: 4, color: 'G' },
+              { x: 10, y: 4, color: 'G' },
+              { x: 11, y: 4, color: 'W' },
+              { x: 12, y: 4, color: 'G' },
+              { x: 13, y: 4, color: 'G' },
+              { x: 14, y: 4, color: 'K' },
+
+              // Row 5
+              { x: 0, y: 5, color: 'K' },
+              { x: 1, y: 5, color: 'G' },
+              { x: 2, y: 5, color: 'G' },
+              { x: 3, y: 5, color: 'G' },
+              { x: 4, y: 5, color: 'W' },
+              { x: 5, y: 5, color: 'W' },
+              { x: 6, y: 5, color: 'W' },
+              { x: 7, y: 5, color: 'W' },
+              { x: 8, y: 5, color: 'W' },
+              { x: 9, y: 5, color: 'W' },
+              { x: 10, y: 5, color: 'W' },
+              { x: 11, y: 5, color: 'W' },
+              { x: 12, y: 5, color: 'G' },
+              { x: 13, y: 5, color: 'G' },
+              { x: 14, y: 5, color: 'G' },
+              { x: 15, y: 5, color: 'K' },
+
+              // Row 6
+              { x: 0, y: 6, color: 'K' },
+              { x: 1, y: 6, color: 'G' },
+              { x: 2, y: 6, color: 'W' },
+              { x: 3, y: 6, color: 'W' },
+              { x: 4, y: 6, color: 'W' },
+              { x: 5, y: 6, color: 'W' },
+              { x: 6, y: 6, color: 'W' },
+              { x: 7, y: 6, color: 'W' },
+              { x: 8, y: 6, color: 'W' },
+              { x: 9, y: 6, color: 'W' },
+              { x: 10, y: 6, color: 'W' },
+              { x: 11, y: 6, color: 'W' },
+              { x: 12, y: 6, color: 'W' },
+              { x: 13, y: 6, color: 'W' },
+              { x: 14, y: 6, color: 'G' },
+              { x: 15, y: 6, color: 'K' },
+
+              // Row 7: bottom of cap
+              { x: 0, y: 7, color: 'K' },
+              { x: 1, y: 7, color: 'W' },
+              { x: 2, y: 7, color: 'W' },
+              { x: 3, y: 7, color: 'W' },
+              { x: 4, y: 7, color: 'W' },
+              { x: 5, y: 7, color: 'W' },
+              { x: 6, y: 7, color: 'W' },
+              { x: 7, y: 7, color: 'W' },
+              { x: 8, y: 7, color: 'W' },
+              { x: 9, y: 7, color: 'W' },
+              { x: 10, y: 7, color: 'W' },
+              { x: 11, y: 7, color: 'W' },
+              { x: 12, y: 7, color: 'W' },
+              { x: 13, y: 7, color: 'W' },
+              { x: 14, y: 7, color: 'W' },
+              { x: 15, y: 7, color: 'K' },
+
+              // Row 8: cap bottom outline + face top
+              { x: 1, y: 8, color: 'K' },
+              { x: 2, y: 8, color: 'K' },
+              { x: 3, y: 8, color: 'K' },
+              { x: 4, y: 8, color: 'K' },
+              { x: 5, y: 8, color: 'K' },
+              { x: 6, y: 8, color: 'K' },
+              { x: 7, y: 8, color: 'K' },
+              { x: 8, y: 8, color: 'K' },
+              { x: 9, y: 8, color: 'K' },
+              { x: 10, y: 8, color: 'K' },
+              { x: 11, y: 8, color: 'K' },
+              { x: 12, y: 8, color: 'K' },
+              { x: 13, y: 8, color: 'K' },
+              { x: 14, y: 8, color: 'K' },
+
+              // Row 9: face/stem top
+              { x: 2, y: 9, color: 'K' },
+              { x: 3, y: 9, color: 'E' },
+              { x: 4, y: 9, color: 'E' },
+              { x: 5, y: 9, color: 'E' },
+              { x: 6, y: 9, color: 'E' },
+              { x: 7, y: 9, color: 'E' },
+              { x: 8, y: 9, color: 'E' },
+              { x: 9, y: 9, color: 'E' },
+              { x: 10, y: 9, color: 'E' },
+              { x: 11, y: 9, color: 'E' },
+              { x: 12, y: 9, color: 'E' },
+              { x: 13, y: 9, color: 'K' },
+
+              // Row 10: face with eyes
+              { x: 2, y: 10, color: 'K' },
+              { x: 3, y: 10, color: 'E' },
+              { x: 4, y: 10, color: 'K' },
+              { x: 5, y: 10, color: 'K' },
+              { x: 6, y: 10, color: 'E' },
+              { x: 7, y: 10, color: 'E' },
+              { x: 8, y: 10, color: 'E' },
+              { x: 9, y: 10, color: 'E' },
+              { x: 10, y: 10, color: 'K' },
+              { x: 11, y: 10, color: 'K' },
+              { x: 12, y: 10, color: 'E' },
+              { x: 13, y: 10, color: 'K' },
+
+              // Row 11: face with eyes
+              { x: 3, y: 11, color: 'K' },
+              { x: 4, y: 11, color: 'K' },
+              { x: 5, y: 11, color: 'K' },
+              { x: 6, y: 11, color: 'E' },
+              { x: 7, y: 11, color: 'E' },
+              { x: 8, y: 11, color: 'E' },
+              { x: 9, y: 11, color: 'E' },
+              { x: 10, y: 11, color: 'K' },
+              { x: 11, y: 11, color: 'K' },
+              { x: 12, y: 11, color: 'K' },
+
+              // Row 12: stem
+              { x: 3, y: 12, color: 'K' },
+              { x: 4, y: 12, color: 'T' },
+              { x: 5, y: 12, color: 'T' },
+              { x: 6, y: 12, color: 'T' },
+              { x: 7, y: 12, color: 'T' },
+              { x: 8, y: 12, color: 'T' },
+              { x: 9, y: 12, color: 'T' },
+              { x: 10, y: 12, color: 'T' },
+              { x: 11, y: 12, color: 'T' },
+              { x: 12, y: 12, color: 'K' },
+
+              // Row 13: stem
+              { x: 4, y: 13, color: 'K' },
+              { x: 5, y: 13, color: 'T' },
+              { x: 6, y: 13, color: 'T' },
+              { x: 7, y: 13, color: 'T' },
+              { x: 8, y: 13, color: 'T' },
+              { x: 9, y: 13, color: 'T' },
+              { x: 10, y: 13, color: 'T' },
+              { x: 11, y: 13, color: 'K' },
+
+              // Row 14: stem bottom
+              { x: 4, y: 14, color: 'K' },
+              { x: 5, y: 14, color: 'T' },
+              { x: 6, y: 14, color: 'T' },
+              { x: 7, y: 14, color: 'T' },
+              { x: 8, y: 14, color: 'T' },
+              { x: 9, y: 14, color: 'T' },
+              { x: 10, y: 14, color: 'T' },
+              { x: 11, y: 14, color: 'K' },
+
+              // Row 15: bottom outline
+              { x: 5, y: 15, color: 'K' },
+              { x: 6, y: 15, color: 'K' },
+              { x: 7, y: 15, color: 'K' },
+              { x: 8, y: 15, color: 'K' },
+              { x: 9, y: 15, color: 'K' },
+              { x: 10, y: 15, color: 'K' },
             ],
           },
         },
       }
 
-      // Function to display messages in a designated area
       function showMessage(elementId, message, type = 'error') {
         const messageArea = document.getElementById(elementId)
         if (messageArea) {
           messageArea.textContent = message
-          messageArea.className = 'message-area ' + type // Apply base and type-specific class
+          messageArea.className = 'message-area ' + type
           messageArea.style.display = 'block'
         }
       }
 
-      // Function to clear messages
       function clearMessage(elementId) {
         const messageArea = document.getElementById(elementId)
         if (messageArea) {
@@ -358,40 +779,35 @@
         }
       }
 
-      // Initialize the page
       document.addEventListener('DOMContentLoaded', function () {
-        // Display the JSON for each example, pretty-printed
-        document.getElementById('basic-json').textContent = JSON.stringify(
-          examples.basic.pxon,
+        document.getElementById('mario-json').textContent = JSON.stringify(
+          examples.mario.pxon,
           null,
           2
         )
-        document.getElementById('heart-json').textContent = JSON.stringify(
-          examples.heart.pxon,
+        document.getElementById('mushroom-json').textContent = JSON.stringify(
+          examples.mushroom.pxon,
           null,
           2
         )
 
-        // Initialize with the first example rendered
-        renderExample('basic')
-        renderExample('heart')
+        renderExample('mario')
+        renderExample('mushroom')
       })
 
-      // Render a specific example
       function renderExample(exampleId) {
         const pxonData = examples[exampleId].pxon
         renderPixelGrid(pxonData, `${exampleId}-grid`)
       }
       window.renderExample = renderExample
 
-      // Render custom PXON input
       function renderCustom() {
         const customInputArea = document.getElementById('custom-input')
         const messageAreaId = 'custom-message-area'
         const gridId = 'custom-grid'
 
-        clearMessage(messageAreaId) // Clear previous messages
-        document.getElementById(gridId).innerHTML = '' // Clear previous custom grid
+        clearMessage(messageAreaId)
+        document.getElementById(gridId).innerHTML = ''
 
         try {
           let rawInput = customInputArea.value
@@ -400,18 +816,13 @@
             return
           }
 
-          // Attempt to clean the JSON input
-          // 1. Remove single-line comments (// ...)
           let cleanedInput = rawInput.replace(/\/\/.*/g, '')
-          // 2. Remove multi-line comments (/* ... */) - careful with nested, but usually fine for JSON.
           cleanedInput = cleanedInput.replace(/\/\*[\s\S]*?\*\//g, '')
-          // 3. Attempt to remove trailing commas from arrays and objects
-          cleanedInput = cleanedInput.replace(/,\s*\]/g, ']') // Trailing comma in array
-          cleanedInput = cleanedInput.replace(/,\s*\}/g, '}') // Trailing comma in object
+          cleanedInput = cleanedInput.replace(/,\s*\]/g, ']')
+          cleanedInput = cleanedInput.replace(/,\s*\}/g, '}')
 
           const pxonData = JSON.parse(cleanedInput)
 
-          // Basic validation of PXON structure
           if (
             !pxonData ||
             typeof pxonData.width !== 'number' ||
@@ -422,51 +833,42 @@
           ) {
             showMessage(
               messageAreaId,
-              'The JSON data does not appear to be a valid PXON object. Missing or invalid required fields (width, height, pixels, colors).',
+              'Invalid PXON: missing width, height, pixels, or colors.',
               'error'
             )
             return
           }
 
           renderPixelGrid(pxonData, gridId)
-          showMessage(messageAreaId, 'Visualization updated successfully!', 'success')
+          showMessage(messageAreaId, 'Visualization updated!', 'success')
         } catch (error) {
-          console.error('Error parsing or rendering custom PXON:', error)
+          console.error('Error parsing custom PXON:', error)
           showMessage(
             messageAreaId,
-            'Invalid JSON or PXON structure: ' +
-              error.message +
-              '. Please check for syntax errors, unclosed brackets/braces, or ensure comments are correctly formatted if used.',
+            'Invalid JSON: ' + error.message,
             'error'
           )
         }
       }
       window.renderCustom = renderCustom
 
-      // Render a pixel grid from PXON data
       function renderPixelGrid(pxonData, targetId) {
         const gridElement = document.getElementById(targetId)
-        gridElement.innerHTML = '' // Clear previous grid content
+        gridElement.innerHTML = ''
 
-        // Set the grid dimensions
         const width = pxonData.width
         const height = pxonData.height
-        const pixelSize = 20 // Size of each pixel in pixels
+        const pixelSize = 16
 
         gridElement.style.width = width * pixelSize + 'px'
         gridElement.style.height = height * pixelSize + 'px'
 
-        // Create a 2D array to represent the grid, initialized with a default (e.g., transparent or a specific background)
-        // This helps in explicitly defining every cell.
         const gridData = Array(height)
           .fill(null)
           .map(() => Array(width).fill(null))
 
-        // Fill in the pixels from the PXON data
-        // Ensure pxonData.pixels is an array before trying to iterate
         if (Array.isArray(pxonData.pixels)) {
           pxonData.pixels.forEach(pixel => {
-            // Check if pixel coordinates are within bounds
             if (
               pixel &&
               typeof pixel.x === 'number' &&
@@ -481,16 +883,12 @@
           })
         }
 
-        // Render the grid
         for (let y = 0; y < height; y++) {
           for (let x = 0; x < width; x++) {
             const pixelElement = document.createElement('div')
             pixelElement.className = 'pixel'
-            // pixelElement.style.width = pixelSize + 'px'; // Already set by class if fixed, but good for clarity
-            // pixelElement.style.height = pixelSize + 'px'; // Already set by class
 
             const colorKey = gridData[y][x]
-            // Ensure pxonData.colors is an object and not null before accessing
             if (
               colorKey &&
               pxonData.colors &&
@@ -499,10 +897,7 @@
             ) {
               pixelElement.style.backgroundColor = pxonData.colors[colorKey]
             } else {
-              // Default to transparent for empty or undefined colorKey pixels
               pixelElement.style.backgroundColor = 'transparent'
-              // Optionally, add a very light border to see "empty" defined cells
-              pixelElement.style.border = '1px dotted #e2e8f0'
             }
 
             gridElement.appendChild(pixelElement)
