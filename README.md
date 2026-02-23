@@ -3,13 +3,8 @@
 > A TypeScript library for importing, creating, manipulating, and exporting PXON data.
 
 [![npm version](https://badge.fury.io/js/pxon.svg)](https://badge.fury.io/js/pxon)
-[![npm downloads](https://img.shields.io/npm/dm/pxon.svg)](https://www.npmjs.com/package/pxon)
-[![Bundle size](https://img.shields.io/bundlephobia/minzip/pxon)](https://bundlephobia.com/package/pxon)
 [![CI](https://github.com/matthewhudson/pxon/actions/workflows/main.yml/badge.svg)](https://github.com/matthewhudson/pxon/actions/workflows/main.yml)
 [![Coverage Status](https://codecov.io/github/matthewhudson/pxon/branch/main/graph/badge.svg?token=aOmuqvyy4J)](https://codecov.io/github/matthewhudson/pxon)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
-[![Node.js: v22](https://img.shields.io/badge/node-v22-green.svg)](https://nodejs.org/en/)
 
 ## Features
 
