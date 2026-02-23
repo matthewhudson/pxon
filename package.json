@@ -26,6 +26,7 @@
     "@eslint/js": "^9.28.0",
     "@typescript-eslint/eslint-plugin": "^8.33.0",
     "@typescript-eslint/parser": "^8.33.0",
+    "@vitest/coverage-v8": "4.0.18",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "^5.4.1",
@@ -35,7 +36,7 @@
     "typedoc": "^0.28.5",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.33.0",
-    "vitest": "^3.1.1"
+    "vitest": "^4.0.18"
   },
   "scripts": {
     "build": "pnpm run clean && tsup",
