@@ -260,7 +260,10 @@
       </div>
     </div>
 
-    <script>
+    <script type="module">
+      // To use the PXON library in your own project:
+      // import { PXON } from 'https://esm.sh/pxon'
+
       // Example PXON data
       const examples = {
         basic: {
@@ -379,6 +382,7 @@
         const pxonData = examples[exampleId].pxon
         renderPixelGrid(pxonData, `${exampleId}-grid`)
       }
+      window.renderExample = renderExample
 
       // Render custom PXON input
       function renderCustom() {
@@ -437,6 +441,7 @@
           )
         }
       }
+      window.renderCustom = renderCustom
 
       // Render a pixel grid from PXON data
       function renderPixelGrid(pxonData, targetId) {

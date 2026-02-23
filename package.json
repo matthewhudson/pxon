@@ -4,16 +4,12 @@
   "type": "module",
   "homepage": "https://github.com/matthewhudson/pxon",
   "description": "A library for handling pixel data in a standardized format",
-  "main": "./dist/cjs/pxon.js",
-  "module": "./dist/esm/pxon.js",
-  "browser": "./dist/browser/pxon.min.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/pxon.js",
-      "require": "./dist/cjs/pxon.js",
-      "browser": "./dist/browser/pxon.min.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -28,78 +24,38 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.4",
     "@eslint/js": "^9.28.0",
-    "@rollup/plugin-commonjs": "^28.0.3",
-    "@rollup/plugin-node-resolve": "^16.0.1",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^12.1.2",
-    "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^8.33.0",
     "@typescript-eslint/parser": "^8.33.0",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.28.0",
-    "eslint-plugin-jest": "^28.12.0",
+    "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "^5.4.1",
     "globals": "^15.4.0",
-    "typescript-eslint": "^8.33.0",
-    "jest": "^29.7.0",
     "prettier": "^3.5.3",
-    "rollup": "^4.41.1",
-    "rollup-plugin-dts": "^6.2.1",
-    "ts-jest": "^29.3.4",
-    "tslib": "^2.8.1",
+    "tsup": "^8.4.0",
     "typedoc": "^0.28.5",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.0",
+    "vitest": "^3.1.1"
   },
   "scripts": {
-    "build": "npm run clean && rollup -c",
+    "build": "pnpm run clean && tsup",
     "clean": "rm -rf dist coverage",
-    "dev": "rollup -c -w",
+    "dev": "tsup --watch",
     "docs": "typedoc --out docs src/index.ts",
     "docs:serve": "npx serve docs",
     "lint": "eslint 'src/**/*.{js,ts,mjs}'",
     "lint:fix": "eslint 'src/**/*.{js,ts,mjs}' --fix",
     "format": "prettier --write 'src/**/*.{js,ts,mjs}'",
     "format:check": "prettier --check 'src/**/*.{js,ts,mjs}'",
-    "pretest": "npm run lint && npm run format:check && npm run typecheck",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "prepublishOnly": "npm run validate",
-    "prepare": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "pnpm run validate",
+    "prepare": "pnpm run build",
     "typecheck": "tsc --noEmit",
-    "validate": "npm run lint && npm run format:check && npm run typecheck && npm test",
+    "validate": "pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "npm run validate && npm run build && changeset publish"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "jest": {
-    "preset": "ts-jest/presets/js-with-ts-esm",
-    "testEnvironment": "node",
-    "extensionsToTreatAsEsm": [
-      ".ts"
-    ],
-    "moduleNameMapper": {
-      "^(\\.{1,2}/.*)\\.js$": "$1"
-    },
-    "transform": {
-      "^.+\\.[tj]s$": [
-        "ts-jest",
-        {
-          "useESM": true
-        }
-      ]
-    },
-    "collectCoverage": true,
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text",
-      "clover"
-    ]
+    "release": "pnpm run validate && pnpm run build && changeset publish"
   }
 }
