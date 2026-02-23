@@ -13,85 +13,85 @@
 
 ## Features
 
-- 🌲 **Tree-shakable**: Import only what you need
-- 🔄 **Multiple formats**: ESM, CommonJS, and UMD bundles
-- 📊 **Type-safe**: Full TypeScript support with type definitions
-- 📱 **Universal**: Works in Node.js and browsers
+- **Tree-shakable**: Import only what you need
+- **Multiple formats**: ESM and CommonJS bundles
+- **Type-safe**: Full TypeScript support with type definitions
+- **Zero dependencies**: No runtime dependencies
 
 ## Installation
 
 ```sh
+pnpm add pxon
+```
+
+Or with npm/yarn:
+
+```sh
 npm install pxon
+yarn add pxon
 ```
 
 ## Usage
 
-PXON supports multiple import styles to fit your needs:
-
 ### ES Modules (Recommended)
 
 ```ts
-import { PXON } from 'pxon';
+import { PXON } from 'pxon'
 
-const pxon = new PXON();
+const pxon = new PXON()
 ```
 
 ### CommonJS
 
 ```js
-const { PXON } = require('pxon');
+const { PXON } = require('pxon')
 
-const pxon = new PXON();
+const pxon = new PXON()
 ```
 
 ### Browser via CDN
 
 ```html
-<!-- Production (minified) -->
-<script src="https://unpkg.com/pxon/dist/browser/pxon.min.js"></script>
+<script type="module">
+  import { PXON } from 'https://esm.sh/pxon'
 
-<!-- Development (with helpful errors) -->
-<script src="https://unpkg.com/pxon/dist/browser/pxon.js"></script>
-
-<script>
-  // The library is available as a global variable
-  const pxon = new PXON();
+  const pxon = new PXON()
 </script>
 ```
 
 ## Example Usage
 
 ```ts
-import { PXON } from 'pxon';
+import { PXON } from 'pxon'
 
-const pxon = new PXON();
+const pxon = new PXON()
 
 // Import PXON-formatted JSON.
-pxon.import({ 
+pxon.import({
   exif: {
     artist: 'Matthew Hudson',
-    software: 'https://make8bitart.com/'
+    software: 'https://make8bitart.com/',
   },
   pxif: {
-    pixels: []
-  }
-});
+    pixels: [],
+  },
+})
 
 // Set some EXIF data.
-pxon.artist = 'Matthew Hudson';
-pxon.software = 'https://make8bitart.com/';
+pxon.artist = 'Matthew Hudson'
+pxon.software = 'https://make8bitart.com/'
 
 // Set a single pixel's value.
-pxon.setPixel({ x: 0, y: 0, color: 'rgba(0, 0, 0, 1)', size: 1 });
+pxon.setPixel({ x: 0, y: 0, color: 'rgba(0, 0, 0, 1)', size: 1 })
 
 // Get all pixels as an array
-const allPixels = pxon.getAllPixels();
+const allPixels = pxon.getAllPixels()
 
 // Get a specific pixel
-const pixel = pxon.getPixel(0, 0);
+const pixel = pxon.getPixel(0, 0)
 
 // Returns a PXON-formatted object.
-console.log(pxon.export());
+console.log(pxon.export())
 ```
 
 ### [Full API Documentation &rarr;](https://matthewhudson.github.io/pxon/)
@@ -112,27 +112,31 @@ console.log(pxon.export());
 
 ```sh
 # Install dependencies
-npm install
+pnpm install
 
 # Run development build with watch mode
-npm run dev
+pnpm run dev
 
 # Run tests
-npm test
+pnpm run test
+
+# Run tests in watch mode
+pnpm run test:watch
 
 # Build for production
-npm run build
+pnpm run build
 
-# Generate API documentation
-npm run docs
+# Lint and format check
+pnpm run lint
+pnpm run format:check
 
-# Serve API documentation locally
-npm run docs:serve
+# Full validation (lint + format + typecheck + test)
+pnpm run validate
 ```
 
 ## Browser Compatibility
 
-PXON is compatible with all modern browsers (Chrome, Firefox, Safari, Edge) and Node.js v22+. The library uses ES2020 features, so for older browser support, consider using a bundler with appropriate polyfills.
+PXON is compatible with all modern browsers and Node.js v22+. The library targets ES2022.
 
 ## Contributing
 
