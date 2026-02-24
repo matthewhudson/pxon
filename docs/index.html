@@ -1,514 +1,1320 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PXON NPM Module Demo</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family:
-          'Inter',
-          -apple-system,
-          BlinkMacSystemFont,
-          'Segoe UI',
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          'Open Sans',
-          'Helvetica Neue',
-          sans-serif;
-        line-height: 1.6;
-        color: #333;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #f7fafc; /* Light gray background */
-      }
-      header {
-        text-align: center;
-        margin-bottom: 40px;
-      }
-      h1 {
-        color: #2d3748; /* Darker heading */
-      }
-      .container {
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PXON - Pixel Art Object Notation</title>
+  <meta name="description" content="PXON is a JSON-based format for describing pixel art. A TypeScript library for importing, creating, manipulating, and exporting pixel data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============ RESET & BASE ============ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #141414;
+      --bg-code: #1a1a2e;
+      --text: #e8e8e8;
+      --text-muted: #888;
+      --accent: #f72585;
+      --accent-2: #4cc9f0;
+      --border: #2a2a2a;
+      --pixel-size: 20px;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============ SCROLLBAR ============ */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* ============ LAYOUT ============ */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    /* ============ TYPOGRAPHY ============ */
+    h1, h2, h3 { font-family: var(--font-mono); font-weight: 700; letter-spacing: -0.02em; }
+    h2 { font-size: 1.75rem; margin-bottom: 24px; }
+    h3 { font-size: 1.15rem; margin-bottom: 12px; color: var(--accent-2); }
+    p { color: var(--text-muted); margin-bottom: 16px; line-height: 1.7; }
+    p strong { color: var(--text); }
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; text-decoration: underline; }
+
+    /* ============ NAV ============ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    nav .nav-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    nav .logo {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    nav .logo .pixel-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      display: inline-block;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+    }
+    nav ul li a {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav ul li a:hover { color: var(--text); text-decoration: none; }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 640px) {
+      nav ul { display: none; }
+      .mobile-menu-btn { display: block; }
+      nav ul.open {
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(12px);
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border);
+        gap: 16px;
       }
-      .example {
-        border: 1px solid #e2e8f0; /* Softer border */
-        border-radius: 8px;
-        padding: 25px; /* Increased padding */
-        background-color: #ffffff; /* White background for examples */
-        box-shadow:
-          0 4px 6px -1px rgba(0, 0, 0, 0.1),
-          0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Subtle shadow */
-      }
-      .example-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px; /* Reduced margin as details/summary adds some */
-      }
-      .example-title {
-        font-size: 1.25rem; /* Slightly larger title */
-        font-weight: 500; /* Medium weight */
-        color: #4a5568;
-      }
-      .visualization {
-        display: flex;
-        flex-direction: column; /* Stack title and grid */
-        gap: 15px; /* Gap between title and grid */
-        align-items: flex-start; /* Align to start */
-        margin-top: 15px;
-      }
-      .pixel-grid-container h3 {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #4a5568;
-        margin-bottom: 10px;
-      }
-      .pixel-grid {
-        border: 1px solid #cbd5e0;
-        display: inline-block; /* Keep inline-block for natural sizing */
-        background-color: #fdfdfd; /* Light background for the grid itself */
-      }
-      .pixel {
-        width: 20px;
-        height: 20px;
-        float: left; /* Keep float for pixel layout */
-        box-sizing: border-box; /* Include border in size */
-      }
-      pre {
-        background-color: #2d3748; /* Dark background for code */
-        color: #e2e8f0; /* Light text for code */
-        padding: 15px;
-        border-radius: 6px;
-        overflow-x: auto;
-        font-size: 14px;
-        line-height: 1.4; /* Improved line height for code */
-        margin-top: 10px; /* Add some space above the pre block */
-      }
-      .controls {
-        /* margin-top: 15px; No longer needed here as it's part of example-header */
-      }
-      button {
-        background-color: #4299e1; /* Blue button */
-        color: white;
-        border: none;
-        padding: 10px 18px; /* Slightly larger padding */
-        border-radius: 6px; /* More rounded */
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        margin-left: 10px; /* Use margin-left if it's the only button or for spacing */
-        transition: background-color 0.2s ease-in-out;
-      }
-      button:hover {
-        background-color: #3182ce; /* Darker blue on hover */
-      }
-      textarea#custom-input {
-        width: 100%;
-        font-family: monospace;
-        padding: 10px;
-        border-radius: 6px;
-        border: 1px solid #cbd5e0;
-        box-sizing: border-box; /* Ensure padding and border are included in width */
-        margin-bottom: 10px; /* Space before message area */
-      }
-      .message-area {
-        margin-top: 10px;
-        padding: 12px 15px;
-        border-radius: 6px;
-        font-size: 14px;
-        display: none; /* Hidden by default */
-      }
-      .message-area.success {
-        background-color: #c6f6d5; /* Green for success */
-        color: #2f855a;
-        border: 1px solid #68d391;
-      }
-      .message-area.error {
-        background-color: #fed7d7; /* Red for error */
-        color: #c53030;
-        border: 1px solid #f56565;
-      }
-      .info {
-        margin-top: 40px;
-        padding: 20px;
-        background-color: #ebf8ff; /* Light blue for info box */
-        border-radius: 8px;
-        border: 1px solid #bee3f8;
-      }
-      .info p {
-        /* Add some margin between paragraphs in the info section */
-        margin-bottom: 10px;
-      }
-      .info p:last-child {
-        margin-bottom: 0;
-      }
-      a {
-        color: #4299e1;
-        text-decoration: none;
-        font-weight: 500;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      details {
-        margin-top: 15px;
-        border: 1px solid #e2e8f0;
-        border-radius: 6px;
-        padding: 0; /* Remove padding from details itself */
-      }
-      details summary {
-        padding: 10px 15px;
-        font-weight: 500;
-        color: #4a5568;
-        background-color: #f8fafc;
-        border-radius: 6px 6px 0 0; /* Round top corners if details is open */
-        cursor: pointer;
-        outline: none;
-      }
-      details[open] summary {
-        border-bottom: 1px solid #e2e8f0;
-      }
-      details pre {
-        margin-top: 0; /* Remove margin-top for pre inside details */
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>PXON NPM Module Demo</h1>
-      <div class="info">
-        <p>
-          PXON (Pixel Object Notation) is a JSON-based format for describing pixel art. It provides a structured way to represent pixel-based images with additional metadata.
-        </p>
-        <p>
-          This page is a demo of the <a href="https://github.com/matthewhudson/pxon" target="_blank">PXON NPM module</a>, a JavaScript library for importing, creating, manipulating, and exporting PXON data. For more information and examples, visit the official specification site: <a href="https://jennmoney.biz/pxon" target="_blank">jennmoney.biz/pxon</a>.
-        </p>
-      </div>
-    </header>
+    }
 
+    /* ============ HERO ============ */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image:
+        linear-gradient(var(--text-muted) 1px, transparent 1px),
+        linear-gradient(90deg, var(--text-muted) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero .tagline {
+      font-family: var(--font-mono);
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .hero .badges {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .badge .dot.green { background: #4ade80; }
+    .badge .dot.blue { background: var(--accent-2); }
+    .badge .dot.pink { background: var(--accent); }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-1px); text-decoration: none; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(247, 37, 133, 0.3);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 30px rgba(247, 37, 133, 0.5);
+      opacity: 1;
+      color: #fff;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--text-muted); opacity: 1; color: var(--text); }
+
+    .install-cmd {
+      margin-top: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .install-cmd:hover { border-color: var(--text-muted); }
+    .install-cmd .cmd-text { color: var(--text-muted); user-select: all; }
+    .install-cmd .cmd-text span { color: var(--accent-2); }
+    .install-cmd .copy-icon {
+      color: var(--text-muted);
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+    .install-cmd:hover .copy-icon { color: var(--text); }
+    .install-cmd .copied-toast {
+      position: absolute;
+      top: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .install-cmd .copied-toast.show { opacity: 1; }
+
+    /* ============ PLAYGROUND ============ */
+    .playground-canvas-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    #playground-canvas {
+      border: 2px solid var(--border);
+      cursor: crosshair;
+      image-rendering: pixelated;
+      background: #111;
+      touch-action: none;
+    }
+    .playground-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .color-swatch {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .color-swatch:hover { transform: scale(1.15); }
+    .color-swatch.active { border-color: #fff; transform: scale(1.15); }
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      font-family: var(--font-mono);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-sm:hover { border-color: var(--text-muted); color: var(--text); }
+
+    .playground-json {
+      margin-top: 16px;
+      position: relative;
+    }
+    .playground-json pre {
+      max-height: 280px;
+      overflow: auto;
+    }
+
+    /* ============ CODE BLOCKS ============ */
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: #c9d1d9;
+      margin: 16px 0;
+      position: relative;
+    }
+    pre .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    pre .copy-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    code { font-family: var(--font-mono); }
+    .token-kw { color: #ff79c6; }
+    .token-str { color: #f1fa8c; }
+    .token-num { color: #bd93f9; }
+    .token-cm { color: #6272a4; font-style: italic; }
+    .token-fn { color: #50fa7b; }
+    .token-prop { color: #8be9fd; }
+    .token-op { color: #ff79c6; }
+    .token-br { color: #f8f8f2; }
+    .token-cls { color: #f1fa8c; }
+
+    /* ============ SPEC TABLE ============ */
+    .spec-grid {
+      display: grid;
+      gap: 2px;
+      margin: 16px 0;
+    }
+    .spec-row {
+      display: grid;
+      grid-template-columns: 160px 80px 1fr;
+      gap: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .spec-row.header {
+      background: var(--bg-code);
+    }
+    .spec-cell {
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      border-right: 1px solid var(--border);
+    }
+    .spec-cell:last-child { border-right: none; }
+    .spec-cell.prop {
+      font-family: var(--font-mono);
+      color: var(--accent-2);
+      font-weight: 600;
+    }
+    .spec-cell.type {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+    .spec-cell.desc { color: var(--text-muted); }
+    .spec-row.header .spec-cell {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 640px) {
+      .spec-row { grid-template-columns: 1fr; }
+      .spec-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .spec-cell:last-child { border-bottom: none; }
+    }
+
+    /* ============ CONCEPT CARDS ============ */
+    .concept-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .concept-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .concept-card:hover { border-color: var(--text-muted); }
+    .concept-card .card-icon {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: rgba(247, 37, 133, 0.1);
+      border-radius: 4px;
+      color: var(--accent);
+    }
+    .concept-card h3 { margin-bottom: 8px; color: var(--text); font-size: 1rem; }
+    .concept-card p { font-size: 0.85rem; margin-bottom: 0; }
+
+    /* ============ API SECTION ============ */
+    .api-method {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .api-method-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .api-method-header:hover { background: rgba(255,255,255,0.02); }
+    .api-method-header .method-name {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+    .api-method-header .method-sig {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .api-method-header .toggle-icon {
+      margin-left: auto;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      transition: transform 0.2s;
+    }
+    .api-method.open .toggle-icon { transform: rotate(90deg); }
+    .api-method-body {
+      padding: 0 20px 20px;
+      display: none;
+      border-top: 1px solid var(--border);
+    }
+    .api-method.open .api-method-body { display: block; }
+    .api-method-body p { font-size: 0.85rem; margin-top: 12px; }
+    .api-method-body pre { margin-top: 12px; }
+
+    /* ============ STEP DIAGRAM ============ */
+    .step-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 32px 0;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .step-box {
+      flex-shrink: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .step-box .step-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .step-box .step-label {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .step-arrow {
+      flex-shrink: 0;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      padding: 0 8px;
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--accent); }
+
+    /* ============ SECTION LABEL ============ */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    /* ============ INLINE CODE ============ */
+    p code, li code {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.8em;
+      color: var(--accent-2);
+    }
+
+    /* ============ LISTS ============ */
+    ul, ol {
+      color: var(--text-muted);
+      padding-left: 20px;
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    li { font-size: 0.9rem; }
+
+    /* ============ LINKS (ECOSYSTEM) ============ */
+    .link-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .link-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 20px;
+      transition: border-color 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .link-card:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; opacity: 1; }
+    .link-card .link-title {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .link-card .link-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    /* ============ PIXEL ART DEMO ============ */
+    .demo-grid-inline {
+      display: inline-grid;
+      gap: 0;
+      border: 2px solid var(--border);
+      margin: 8px 0;
+    }
+    .demo-pixel {
+      width: var(--pixel-size);
+      height: var(--pixel-size);
+    }
+
+    /* ============ MISC ============ */
+    .divider {
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      margin-bottom: 24px;
+    }
+    .callout {
+      background: rgba(76, 201, 240, 0.06);
+      border-left: 3px solid var(--accent-2);
+      padding: 16px 20px;
+      margin: 16px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .callout p { color: var(--text-muted); margin-bottom: 0; font-size: 0.85rem; }
+    .callout strong { color: var(--accent-2); }
+
+    /* ============ ANIMATIONS ============ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in {
+      opacity: 0;
+      animation: fadeInUp 0.5s ease forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">
+        <span class="pixel-dot"></span>
+        PXON
+      </div>
+      <button class="mobile-menu-btn" onclick="document.querySelector('nav ul').classList.toggle('open')" aria-label="Toggle navigation menu">&#9776;</button>
+      <ul>
+        <li><a href="#what">What is PXON?</a></li>
+        <li><a href="#spec">Spec</a></li>
+        <li><a href="#api">API</a></li>
+        <li><a href="#playground">Playground</a></li>
+        <li><a href="https://github.com/matthewhudson/pxon" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <header class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="container" style="position:relative;">
+      <h1><span class="accent">PX</span>ON</h1>
+      <p class="tagline">"Pixel Art Object Notation" - a proposed standard,<br />which no one needs or even asked for.</p>
+      <div class="badges">
+        <div class="badge"><span class="dot green"></span> v2.0.0</div>
+        <div class="badge"><span class="dot blue"></span> TypeScript</div>
+        <div class="badge"><span class="dot pink"></span> Zero deps</div>
+      </div>
+      <div class="hero-actions">
+        <a href="#playground" class="btn btn-primary">Try the Playground</a>
+        <a href="#api" class="btn btn-secondary">Read the Docs</a>
+      </div>
+      <div class="install-cmd" onclick="copyInstall(this)">
+        <span class="cmd-text">$ <span>pnpm</span> add pxon</span>
+        <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span class="copied-toast">Copied!</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== WHAT IS PXON ==================== -->
+  <section id="what">
     <div class="container">
-      <div class="example">
-        <div class="example-header">
-          <div class="example-title">Basic PXON Example</div>
-          <div class="controls">
-            <button onclick="renderExample('basic')">Visualize</button>
-          </div>
+      <div class="section-label">The Idea</div>
+      <h2>What is PXON?</h2>
+      <div class="divider"></div>
+      <p>
+        PXON <strong>(pronounced "picks on")</strong> is a JSON-based format for describing pixel art.
+        Think of it as the love child of EXIF metadata and your favorite 8-bit canvas.
+        It gives your pixel art a structured, portable, machine-readable home &mdash;
+        complete with artist info, creation metadata, and every single pixel coordinate.
+      </p>
+      <p>
+        The format was created by <a href="https://jennmoney.biz/pxon/" target="_blank" rel="noopener">Jenn Schiffer</a>
+        and uses two main objects: <code>exif</code> for image metadata (borrowed from the
+        <a href="https://www.w3.org/2003/12/exif/" target="_blank" rel="noopener">Exif RDF schema</a>),
+        and <code>pxif</code> &mdash; the pixel art spin on EXIF &mdash; which holds the actual pixel data.
+      </p>
+
+      <div class="concept-cards">
+        <div class="concept-card">
+          <div class="card-icon">{}</div>
+          <h3>Just JSON</h3>
+          <p>No custom binary format. No special parser. It's JSON all the way down. Paste it, POST it, store it, diff it.</p>
         </div>
-        <details>
-          <summary>View PXON JSON</summary>
-          <pre id="basic-json"></pre>
-        </details>
-        <div class="visualization">
-          <div class="pixel-grid-container">
-            <h3>Pixel Visualization</h3>
-            <div id="basic-grid" class="pixel-grid"></div>
-          </div>
+        <div class="concept-card">
+          <div class="card-icon">px</div>
+          <h3>Pixel Perfect</h3>
+          <p>Every pixel is an object with <code>x</code>, <code>y</code>, and <code>color</code>. The smallest unit of art, described precisely.</p>
+        </div>
+        <div class="concept-card">
+          <div class="card-icon">i</div>
+          <h3>Rich Metadata</h3>
+          <p>Track artist, software, copyright, description, and timestamps. Your pixel art deserves provenance.</p>
         </div>
       </div>
 
-      <div class="example">
-        <div class="example-header">
-          <div class="example-title">Heart PXON Example</div>
-          <div class="controls">
-            <button onclick="renderExample('heart')">Visualize</button>
-          </div>
+      <div class="callout">
+        <p><strong>Fun fact:</strong> PXON was born from the same creative spirit that gave us
+        <a href="https://make8bitart.com/" target="_blank" rel="noopener">make8bitart.com</a> &mdash;
+        a beloved pixel art painting app used by thousands of artists and bored-in-meetings professionals alike.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== THE SPEC ==================== -->
+  <section id="spec">
+    <div class="container">
+      <div class="section-label">The Format</div>
+      <h2>PXON Specification</h2>
+      <div class="divider"></div>
+
+      <p>A PXON document has two top-level objects. Here's the anatomy:</p>
+
+      <div class="step-diagram">
+        <div class="step-box">
+          <div class="step-num">Object 1</div>
+          <div class="step-label">exif</div>
         </div>
-        <details>
-          <summary>View PXON JSON</summary>
-          <pre id="heart-json"></pre>
-        </details>
-        <div class="visualization">
-          <div class="pixel-grid-container">
-            <h3>Pixel Visualization</h3>
-            <div id="heart-grid" class="pixel-grid"></div>
-          </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-box">
+          <div class="step-num">Contains</div>
+          <div class="step-label">Metadata</div>
+        </div>
+        <div class="step-arrow">+</div>
+        <div class="step-box">
+          <div class="step-num">Object 2</div>
+          <div class="step-label">pxif</div>
+        </div>
+        <div class="step-arrow">&rarr;</div>
+        <div class="step-box">
+          <div class="step-num">Contains</div>
+          <div class="step-label">Pixel Data</div>
         </div>
       </div>
 
-      <div class="example">
-        <div class="example-header">
-          <div class="example-title">Custom PXON Input</div>
-          <div class="controls">
-            <button onclick="renderCustom()">Visualize</button>
-          </div>
+      <h3>exif Properties</h3>
+      <p>Metadata about the artwork, inspired by the Exif RDF Schema:</p>
+      <div class="spec-grid">
+        <div class="spec-row header">
+          <div class="spec-cell">Property</div>
+          <div class="spec-cell">Type</div>
+          <div class="spec-cell">Description</div>
         </div>
-        <textarea
-          id="custom-input"
-          rows="12"
-          placeholder="Paste your PXON JSON (or JSON-like text with comments) here..."
-        ></textarea>
-        <div id="custom-message-area" class="message-area"></div>
-        <div class="visualization">
-          <div class="pixel-grid-container">
-            <h3>Pixel Visualization</h3>
-            <div id="custom-grid" class="pixel-grid"></div>
-          </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">software</div>
+          <div class="spec-cell type">string</div>
+          <div class="spec-cell desc">The tool used to create/export the PXON</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">artist</div>
+          <div class="spec-cell type">string</div>
+          <div class="spec-cell desc">The identity of the pixel artist</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">imageDescription</div>
+          <div class="spec-cell type">string</div>
+          <div class="spec-cell desc">A description of the pixel artwork</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">userComment</div>
+          <div class="spec-cell type">string</div>
+          <div class="spec-cell desc">A freeform comment from the creator</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">copyright</div>
+          <div class="spec-cell type">string</div>
+          <div class="spec-cell desc">Copyright info for the artwork</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">dateTime</div>
+          <div class="spec-cell type">string</div>
+          <div class="spec-cell desc">When the PXON was initially generated</div>
+        </div>
+      </div>
+
+      <h3>pxif Properties</h3>
+      <p>The pixel art data itself. Contains a <code>pixels</code> array where each pixel is:</p>
+      <div class="spec-grid">
+        <div class="spec-row header">
+          <div class="spec-cell">Property</div>
+          <div class="spec-cell">Type</div>
+          <div class="spec-cell">Description</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">x</div>
+          <div class="spec-cell type">integer</div>
+          <div class="spec-cell desc">The x coordinate position of the pixel</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">y</div>
+          <div class="spec-cell type">integer</div>
+          <div class="spec-cell desc">The y coordinate position of the pixel</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-cell prop">color</div>
+          <div class="spec-cell type">string</div>
+          <div class="spec-cell desc">The color of the pixel (e.g. <code>rgba(0, 0, 0, 1)</code>)</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Note:</strong> The <code>size</code> property was removed from the canonical spec (v0.2.0)
+        since a pixel is, by definition, the smallest unit. The PXON library still supports it
+        as a non-canonical convenience field, defaulting to <code>1</code>.</p>
+      </div>
+
+      <h3>Full Example</h3>
+      <p>Here's a complete PXON document describing a small smiley face:</p>
+      <pre id="spec-example"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>{
+  <span class="token-prop">"exif"</span>: {
+    <span class="token-prop">"software"</span>: <span class="token-str">"https://make8bitart.com/"</span>,
+    <span class="token-prop">"artist"</span>: <span class="token-str">"jenn schiffer"</span>,
+    <span class="token-prop">"imageDescription"</span>: <span class="token-str">"smile"</span>,
+    <span class="token-prop">"userComment"</span>: <span class="token-str">"an example pixel drawing"</span>,
+    <span class="token-prop">"copyright"</span>: <span class="token-str">"jenn schiffer 2018"</span>,
+    <span class="token-prop">"dateTime"</span>: <span class="token-str">"2015-09-17T15:21:51.761Z"</span>
+  },
+  <span class="token-prop">"pxif"</span>: {
+    <span class="token-prop">"pixels"</span>: [
+      { <span class="token-prop">"x"</span>: <span class="token-num">2</span>, <span class="token-prop">"y"</span>: <span class="token-num">1</span>, <span class="token-prop">"color"</span>: <span class="token-str">"rgba(0, 0, 0, 1)"</span> },
+      { <span class="token-prop">"x"</span>: <span class="token-num">4</span>, <span class="token-prop">"y"</span>: <span class="token-num">1</span>, <span class="token-prop">"color"</span>: <span class="token-str">"rgba(0, 0, 0, 1)"</span> },
+      { <span class="token-prop">"x"</span>: <span class="token-num">1</span>, <span class="token-prop">"y"</span>: <span class="token-num">3</span>, <span class="token-prop">"color"</span>: <span class="token-str">"rgba(0, 0, 0, 1)"</span> },
+      { <span class="token-prop">"x"</span>: <span class="token-num">2</span>, <span class="token-prop">"y"</span>: <span class="token-num">4</span>, <span class="token-prop">"color"</span>: <span class="token-str">"rgba(0, 0, 0, 1)"</span> },
+      { <span class="token-prop">"x"</span>: <span class="token-num">3</span>, <span class="token-prop">"y"</span>: <span class="token-num">4</span>, <span class="token-prop">"color"</span>: <span class="token-str">"rgba(0, 0, 0, 1)"</span> },
+      { <span class="token-prop">"x"</span>: <span class="token-num">4</span>, <span class="token-prop">"y"</span>: <span class="token-num">4</span>, <span class="token-prop">"color"</span>: <span class="token-str">"rgba(0, 0, 0, 1)"</span> },
+      { <span class="token-prop">"x"</span>: <span class="token-num">5</span>, <span class="token-prop">"y"</span>: <span class="token-num">3</span>, <span class="token-prop">"color"</span>: <span class="token-str">"rgba(0, 0, 0, 1)"</span> }
+    ]
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- ==================== LIBRARY ==================== -->
+  <section id="library">
+    <div class="container">
+      <div class="section-label">The Library</div>
+      <h2>Getting Started</h2>
+      <div class="divider"></div>
+
+      <p>
+        The <code>pxon</code> npm package gives you a <code>PXON</code> class to create,
+        import, manipulate, and export pixel art data. It's tree-shakable, ships ESM + CJS bundles,
+        includes full TypeScript types, and has zero runtime dependencies.
+      </p>
+
+      <h3>Install</h3>
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-cm"># Pick your package manager</span>
+<span class="token-fn">pnpm</span> add pxon
+<span class="token-fn">npm</span> install pxon
+<span class="token-fn">yarn</span> add pxon</code></pre>
+
+      <h3>Quick Start</h3>
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-kw">import</span> { <span class="token-cls">PXON</span> } <span class="token-kw">from</span> <span class="token-str">'pxon'</span>
+
+<span class="token-cm">// Create a new PXON instance</span>
+<span class="token-kw">const</span> art = <span class="token-kw">new</span> <span class="token-cls">PXON</span>()
+
+<span class="token-cm">// Set metadata about your artwork</span>
+art.<span class="token-prop">artist</span> = <span class="token-str">'Your Name'</span>
+art.<span class="token-prop">software</span> = <span class="token-str">'https://make8bitart.com/'</span>
+art.<span class="token-prop">imageDescription</span> = <span class="token-str">'A tiny pixel heart'</span>
+art.<span class="token-prop">dateTime</span> = <span class="token-kw">new</span> <span class="token-cls">Date</span>().<span class="token-fn">toISOString</span>()
+
+<span class="token-cm">// Draw some pixels!</span>
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">1</span>, <span class="token-prop">y</span>: <span class="token-num">0</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">2</span>, <span class="token-prop">y</span>: <span class="token-num">0</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">0</span>, <span class="token-prop">y</span>: <span class="token-num">1</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">1</span>, <span class="token-prop">y</span>: <span class="token-num">1</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">2</span>, <span class="token-prop">y</span>: <span class="token-num">1</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">3</span>, <span class="token-prop">y</span>: <span class="token-num">0</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">4</span>, <span class="token-prop">y</span>: <span class="token-num">0</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">3</span>, <span class="token-prop">y</span>: <span class="token-num">1</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">4</span>, <span class="token-prop">y</span>: <span class="token-num">1</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">5</span>, <span class="token-prop">y</span>: <span class="token-num">1</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 80, 1)'</span> })
+
+<span class="token-cm">// Export as a PXON-formatted JSON object</span>
+<span class="token-kw">const</span> data = art.<span class="token-fn">export</span>()
+console.<span class="token-fn">log</span>(<span class="token-cls">JSON</span>.<span class="token-fn">stringify</span>(data, <span class="token-kw">null</span>, <span class="token-num">2</span>))</code></pre>
+
+      <h3>Import Existing PXON</h3>
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-kw">import</span> { <span class="token-cls">PXON</span> } <span class="token-kw">from</span> <span class="token-str">'pxon'</span>
+
+<span class="token-kw">const</span> art = <span class="token-kw">new</span> <span class="token-cls">PXON</span>()
+
+<span class="token-cm">// Import from a PXON JSON object (e.g. fetched from an API)</span>
+art.<span class="token-fn">import</span>({
+  <span class="token-prop">exif</span>: {
+    <span class="token-prop">artist</span>: <span class="token-str">'jenn schiffer'</span>,
+    <span class="token-prop">software</span>: <span class="token-str">'https://make8bitart.com/'</span>,
+    <span class="token-prop">imageDescription</span>: <span class="token-str">'tiny face'</span>,
+  },
+  <span class="token-prop">pxif</span>: {
+    <span class="token-prop">pixels</span>: [
+      { <span class="token-prop">x</span>: <span class="token-num">0</span>, <span class="token-prop">y</span>: <span class="token-num">0</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(0, 0, 0, 1)'</span>, <span class="token-prop">size</span>: <span class="token-num">1</span> },
+      { <span class="token-prop">x</span>: <span class="token-num">2</span>, <span class="token-prop">y</span>: <span class="token-num">0</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(0, 0, 0, 1)'</span>, <span class="token-prop">size</span>: <span class="token-num">1</span> },
+      { <span class="token-prop">x</span>: <span class="token-num">1</span>, <span class="token-prop">y</span>: <span class="token-num">2</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 0, 1)'</span>, <span class="token-prop">size</span>: <span class="token-num">1</span> },
+    ]
+  }
+})
+
+<span class="token-cm">// Now you can query, modify, and re-export</span>
+<span class="token-kw">const</span> pixel = art.<span class="token-fn">getPixel</span>(<span class="token-num">0</span>, <span class="token-num">0</span>)   <span class="token-cm">// { x: 0, y: 0, color: 'rgba(0, 0, 0, 1)', size: 1 }</span>
+<span class="token-kw">const</span> all = art.<span class="token-fn">getAllPixels</span>()     <span class="token-cm">// Array of all pixel objects</span>
+console.<span class="token-fn">log</span>(art.<span class="token-prop">artist</span>)            <span class="token-cm">// 'jenn schiffer'</span></code></pre>
+
+      <h3>Browser via CDN</h3>
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-cm">&lt;!-- Use esm.sh for instant browser imports --&gt;</span>
+<span class="token-br">&lt;</span><span class="token-kw">script</span> <span class="token-prop">type</span>=<span class="token-str">"module"</span><span class="token-br">&gt;</span>
+  <span class="token-kw">import</span> { <span class="token-cls">PXON</span> } <span class="token-kw">from</span> <span class="token-str">'https://esm.sh/pxon'</span>
+
+  <span class="token-kw">const</span> art = <span class="token-kw">new</span> <span class="token-cls">PXON</span>()
+  art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">0</span>, <span class="token-prop">y</span>: <span class="token-num">0</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 0, 1)'</span> })
+  console.<span class="token-fn">log</span>(art.<span class="token-fn">export</span>())
+<span class="token-br">&lt;/</span><span class="token-kw">script</span><span class="token-br">&gt;</span></code></pre>
+    </div>
+  </section>
+
+  <!-- ==================== API REFERENCE ==================== -->
+  <section id="api">
+    <div class="container">
+      <div class="section-label">Reference</div>
+      <h2>API Reference</h2>
+      <div class="divider"></div>
+
+      <p>The <code>PXON</code> class is the only export. Click each method to expand its details.</p>
+
+      <!-- constructor -->
+      <div class="api-method open">
+        <div class="api-method-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="method-name">constructor</span>
+          <span class="method-sig">new PXON()</span>
+          <span class="toggle-icon">&#9654;</span>
+        </div>
+        <div class="api-method-body">
+          <p>Creates a new PXON instance with empty metadata and no pixels.</p>
+          <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-kw">import</span> { <span class="token-cls">PXON</span> } <span class="token-kw">from</span> <span class="token-str">'pxon'</span>
+<span class="token-kw">const</span> art = <span class="token-kw">new</span> <span class="token-cls">PXON</span>()</code></pre>
+        </div>
+      </div>
+
+      <!-- import -->
+      <div class="api-method">
+        <div class="api-method-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="method-name">.import()</span>
+          <span class="method-sig">import(data: PXONImportData): void</span>
+          <span class="toggle-icon">&#9654;</span>
+        </div>
+        <div class="api-method-body">
+          <p>Imports PXON-formatted data into the instance. Accepts an object with optional <code>exif</code>, <code>pxif</code>, and <code>dataURL</code> fields. Overwrites any existing data.</p>
+          <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>art.<span class="token-fn">import</span>({
+  <span class="token-prop">exif</span>: { <span class="token-prop">artist</span>: <span class="token-str">'you'</span>, <span class="token-prop">software</span>: <span class="token-str">'my-app'</span> },
+  <span class="token-prop">pxif</span>: { <span class="token-prop">pixels</span>: [{ <span class="token-prop">x</span>: <span class="token-num">0</span>, <span class="token-prop">y</span>: <span class="token-num">0</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(0,0,0,1)'</span>, <span class="token-prop">size</span>: <span class="token-num">1</span> }] }
+})</code></pre>
+        </div>
+      </div>
+
+      <!-- export -->
+      <div class="api-method">
+        <div class="api-method-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="method-name">.export()</span>
+          <span class="method-sig">export(): PXONExportData</span>
+          <span class="toggle-icon">&#9654;</span>
+        </div>
+        <div class="api-method-body">
+          <p>Returns a plain object containing all EXIF metadata, pixel data, and the optional <code>dataURL</code>. Ready for <code>JSON.stringify()</code>.</p>
+          <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-kw">const</span> data = art.<span class="token-fn">export</span>()
+console.<span class="token-fn">log</span>(<span class="token-cls">JSON</span>.<span class="token-fn">stringify</span>(data, <span class="token-kw">null</span>, <span class="token-num">2</span>))
+<span class="token-cm">// { exif: {...}, pxif: { pixels: [...] }, dataURL: '' }</span></code></pre>
+        </div>
+      </div>
+
+      <!-- setPixel -->
+      <div class="api-method">
+        <div class="api-method-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="method-name">.setPixel()</span>
+          <span class="method-sig">setPixel(pixel?: Partial&lt;Pixel&gt;): void</span>
+          <span class="toggle-icon">&#9654;</span>
+        </div>
+        <div class="api-method-body">
+          <p>Sets a pixel at the given coordinates. Defaults: <code>x=0</code>, <code>y=0</code>, <code>color='rgba(255,255,255,1)'</code>, <code>size=1</code>. If a pixel already exists at those coordinates, it's overwritten.</p>
+          <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-cm">// Set a red pixel at (3, 5)</span>
+art.<span class="token-fn">setPixel</span>({ <span class="token-prop">x</span>: <span class="token-num">3</span>, <span class="token-prop">y</span>: <span class="token-num">5</span>, <span class="token-prop">color</span>: <span class="token-str">'rgba(255, 0, 0, 1)'</span> })
+
+<span class="token-cm">// Set a default white pixel at (0, 0)</span>
+art.<span class="token-fn">setPixel</span>()</code></pre>
+        </div>
+      </div>
+
+      <!-- getPixel -->
+      <div class="api-method">
+        <div class="api-method-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="method-name">.getPixel()</span>
+          <span class="method-sig">getPixel(x?: number, y?: number): Pixel | undefined</span>
+          <span class="toggle-icon">&#9654;</span>
+        </div>
+        <div class="api-method-body">
+          <p>Returns the pixel at the given coordinates, or <code>undefined</code> if none exists. Uses O(1) <code>Map</code> lookup internally.</p>
+          <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-kw">const</span> pixel = art.<span class="token-fn">getPixel</span>(<span class="token-num">3</span>, <span class="token-num">5</span>)
+<span class="token-cm">// { x: 3, y: 5, color: 'rgba(255, 0, 0, 1)', size: 1 }</span>
+
+<span class="token-kw">const</span> missing = art.<span class="token-fn">getPixel</span>(<span class="token-num">99</span>, <span class="token-num">99</span>)
+<span class="token-cm">// undefined</span></code></pre>
+        </div>
+      </div>
+
+      <!-- getAllPixels -->
+      <div class="api-method">
+        <div class="api-method-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="method-name">.getAllPixels()</span>
+          <span class="method-sig">getAllPixels(): Pixel[]</span>
+          <span class="toggle-icon">&#9654;</span>
+        </div>
+        <div class="api-method-body">
+          <p>Returns a new array of all pixel objects. Useful for iteration and rendering.</p>
+          <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-kw">const</span> pixels = art.<span class="token-fn">getAllPixels</span>()
+pixels.<span class="token-fn">forEach</span>(<span class="token-prop">px</span> <span class="token-op">=></span> {
+  console.<span class="token-fn">log</span>(<span class="token-str">`(${</span>px.x<span class="token-str">}, ${</span>px.y<span class="token-str">}) = ${</span>px.color<span class="token-str">}`</span>)
+})</code></pre>
+        </div>
+      </div>
+
+      <!-- metadata accessors -->
+      <div class="api-method">
+        <div class="api-method-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="method-name">Metadata Accessors</span>
+          <span class="method-sig">get/set artist, software, imageDescription, ...</span>
+          <span class="toggle-icon">&#9654;</span>
+        </div>
+        <div class="api-method-body">
+          <p>All EXIF metadata fields are exposed as getter/setter pairs: <code>artist</code>, <code>software</code>, <code>imageDescription</code>, <code>userComment</code>, <code>copyright</code>, <code>dateTime</code>, and <code>dataURL</code>.</p>
+          <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="token-cm">// Set values</span>
+art.<span class="token-prop">artist</span> = <span class="token-str">'Pixel Master'</span>
+art.<span class="token-prop">software</span> = <span class="token-str">'my-pixel-editor'</span>
+art.<span class="token-prop">copyright</span> = <span class="token-str">'2026 Pixel Master'</span>
+art.<span class="token-prop">dateTime</span> = <span class="token-kw">new</span> <span class="token-cls">Date</span>().<span class="token-fn">toISOString</span>()
+
+<span class="token-cm">// Read values</span>
+console.<span class="token-fn">log</span>(art.<span class="token-prop">artist</span>)           <span class="token-cm">// 'Pixel Master'</span>
+console.<span class="token-fn">log</span>(art.<span class="token-prop">dateTime</span>)         <span class="token-cm">// '2026-02-23T...'</span></code></pre>
         </div>
       </div>
     </div>
+  </section>
 
-    <script type="module">
-      // To use the PXON library in your own project:
-      // import { PXON } from 'https://esm.sh/pxon'
+  <!-- ==================== PLAYGROUND ==================== -->
+  <section id="playground">
+    <div class="container">
+      <div class="section-label">Interactive</div>
+      <h2>Pixel Playground</h2>
+      <div class="divider"></div>
+      <p>Draw some pixel art below. As you paint, the live PXON export updates in real time so you can see exactly how your art maps to JSON data.</p>
 
-      // Example PXON data
-      const examples = {
-        basic: {
-          pxon: {
-            version: '1.0',
-            title: 'Simple Square',
-            description: 'A basic 3x3 square example',
-            width: 3,
-            height: 3,
-            colors: {
-              r: '#FF0000',
-              b: '#0000FF',
-            },
-            pixels: [
-              { x: 0, y: 0, color: 'r' },
-              { x: 1, y: 0, color: 'r' },
-              { x: 2, y: 0, color: 'r' },
-              { x: 0, y: 1, color: 'b' },
-              { x: 1, y: 1, color: 'b' },
-              { x: 2, y: 1, color: 'b' },
-              { x: 0, y: 2, color: 'r' },
-              { x: 1, y: 2, color: 'r' },
-              { x: 2, y: 2, color: 'r' },
-            ],
-          },
-        },
-        heart: {
-          pxon: {
-            version: '1.0',
-            title: 'Pixel Heart',
-            description: 'A simple pixel heart',
-            width: 8,
-            height: 8,
-            colors: {
-              r: '#FF0000', // Red
-              p: '#FF69B4', // Pink
-            },
-            pixels: [
-              { x: 1, y: 0, color: 'r' },
-              { x: 2, y: 0, color: 'r' },
-              { x: 5, y: 0, color: 'r' },
-              { x: 6, y: 0, color: 'r' },
-              { x: 0, y: 1, color: 'r' },
-              { x: 1, y: 1, color: 'p' },
-              { x: 2, y: 1, color: 'p' },
-              { x: 3, y: 1, color: 'r' },
-              { x: 4, y: 1, color: 'r' },
-              { x: 5, y: 1, color: 'p' },
-              { x: 6, y: 1, color: 'p' },
-              { x: 7, y: 1, color: 'r' },
-              { x: 0, y: 2, color: 'r' },
-              { x: 1, y: 2, color: 'p' },
-              { x: 2, y: 2, color: 'p' },
-              { x: 3, y: 2, color: 'p' },
-              { x: 4, y: 2, color: 'p' },
-              { x: 5, y: 2, color: 'p' },
-              { x: 6, y: 2, color: 'p' },
-              { x: 7, y: 2, color: 'r' },
-              { x: 1, y: 3, color: 'r' },
-              { x: 2, y: 3, color: 'p' },
-              { x: 3, y: 3, color: 'p' },
-              { x: 4, y: 3, color: 'p' },
-              { x: 5, y: 3, color: 'p' },
-              { x: 6, y: 3, color: 'r' },
-              { x: 2, y: 4, color: 'r' },
-              { x: 3, y: 4, color: 'p' },
-              { x: 4, y: 4, color: 'p' },
-              { x: 5, y: 4, color: 'r' },
-              { x: 3, y: 5, color: 'r' },
-              { x: 4, y: 5, color: 'r' },
-            ],
-          },
-        },
+      <div class="playground-canvas-wrap">
+        <canvas id="playground-canvas" width="320" height="320"></canvas>
+        <div class="playground-controls">
+          <div class="color-swatch active" style="background:#f72585;" data-color="rgba(247, 37, 133, 1)" title="Pink"></div>
+          <div class="color-swatch" style="background:#4cc9f0;" data-color="rgba(76, 201, 240, 1)" title="Cyan"></div>
+          <div class="color-swatch" style="background:#4ade80;" data-color="rgba(74, 222, 128, 1)" title="Green"></div>
+          <div class="color-swatch" style="background:#f1fa8c;" data-color="rgba(241, 250, 140, 1)" title="Yellow"></div>
+          <div class="color-swatch" style="background:#ffffff;" data-color="rgba(255, 255, 255, 1)" title="White"></div>
+          <div class="color-swatch" style="background:#0a0a0a;border-color:#444;" data-color="rgba(10, 10, 10, 1)" title="Black"></div>
+          <button class="btn-sm" id="eraser-btn" title="Eraser">Eraser</button>
+          <button class="btn-sm" id="clear-btn" title="Clear canvas">Clear</button>
+          <button class="btn-sm" id="export-btn" title="Copy PXON JSON">Copy PXON</button>
+        </div>
+      </div>
+
+      <div class="playground-json">
+        <h3>Live PXON Export</h3>
+        <pre id="playground-output"><code>{ "exif": { ... }, "pxif": { "pixels": [] }, "dataURL": "" }</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ECOSYSTEM ==================== -->
+  <section id="ecosystem">
+    <div class="container">
+      <div class="section-label">Ecosystem</div>
+      <h2>Apps &amp; Resources</h2>
+      <div class="divider"></div>
+      <p>PXON is used in the wild by pixel art tools and creative coding projects:</p>
+
+      <div class="link-cards">
+        <a href="https://make8bitart.com/" target="_blank" rel="noopener" class="link-card">
+          <span class="link-title">make8bitart.com</span>
+          <span class="link-desc">The original pixel art painting app that inspired PXON</span>
+        </a>
+        <a href="http://pxonloop.glitch.me/" target="_blank" rel="noopener" class="link-card">
+          <span class="link-title">pxonloop</span>
+          <span class="link-desc">A PXON playground for experimenting with pixel art data</span>
+        </a>
+        <a href="http://image-to-pxon.glitch.me/" target="_blank" rel="noopener" class="link-card">
+          <span class="link-title">image-to-pxon</span>
+          <span class="link-desc">Convert any image file to PXON format automatically</span>
+        </a>
+        <a href="https://jennmoney.biz/pxon/" target="_blank" rel="noopener" class="link-card">
+          <span class="link-title">PXON Specification</span>
+          <span class="link-desc">The original spec by Jenn Schiffer that started it all</span>
+        </a>
+        <a href="https://github.com/matthewhudson/pxon" target="_blank" rel="noopener" class="link-card">
+          <span class="link-title">GitHub Repository</span>
+          <span class="link-desc">Source code, issues, and contributions welcome</span>
+        </a>
+        <a href="https://www.npmjs.com/package/pxon" target="_blank" rel="noopener" class="link-card">
+          <span class="link-title">npm Package</span>
+          <span class="link-desc">Install the library and check download stats</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="container">
+      <p>
+        PXON is <a href="https://github.com/matthewhudson/pxon/blob/main/LICENSE" target="_blank" rel="noopener">ISC licensed</a>
+        &mdash; built by <a href="https://github.com/matthewhudson" target="_blank" rel="noopener">Matthew Hudson</a>
+        &mdash; spec by <a href="https://jennmoney.biz/pxon/" target="_blank" rel="noopener">Jenn Schiffer</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script type="module">
+    // ============ COPY HELPERS ============
+    window.copyInstall = function(el) {
+      navigator.clipboard.writeText('pnpm add pxon')
+      const toast = el.querySelector('.copied-toast')
+      toast.classList.add('show')
+      setTimeout(() => toast.classList.remove('show'), 1200)
+    }
+
+    window.copyCode = function(btn) {
+      const pre = btn.closest('pre')
+      const code = pre.querySelector('code')
+      navigator.clipboard.writeText(code.textContent)
+      btn.textContent = 'Copied!'
+      setTimeout(() => { btn.textContent = 'Copy' }, 1200)
+    }
+
+    // ============ PLAYGROUND ============
+    const GRID = 16
+    const CELL = 20
+    const canvas = document.getElementById('playground-canvas')
+    const ctx = canvas.getContext('2d')
+    let currentColor = 'rgba(247, 37, 133, 1)'
+    let isEraser = false
+    let isDrawing = false
+
+    // Pixel storage: Map keyed by "x:y"
+    const pixels = new Map()
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      // Draw background
+      ctx.fillStyle = '#111'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      // Draw pixels
+      for (const [, px] of pixels) {
+        ctx.fillStyle = px.color
+        ctx.fillRect(px.x * CELL, px.y * CELL, CELL, CELL)
       }
 
-      // Function to display messages in a designated area
-      function showMessage(elementId, message, type = 'error') {
-        const messageArea = document.getElementById(elementId)
-        if (messageArea) {
-          messageArea.textContent = message
-          messageArea.className = 'message-area ' + type // Apply base and type-specific class
-          messageArea.style.display = 'block'
-        }
+      // Draw grid lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)'
+      ctx.lineWidth = 1
+      for (let i = 0; i <= GRID; i++) {
+        ctx.beginPath()
+        ctx.moveTo(i * CELL, 0)
+        ctx.lineTo(i * CELL, canvas.height)
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.moveTo(0, i * CELL)
+        ctx.lineTo(canvas.width, i * CELL)
+        ctx.stroke()
       }
+    }
 
-      // Function to clear messages
-      function clearMessage(elementId) {
-        const messageArea = document.getElementById(elementId)
-        if (messageArea) {
-          messageArea.textContent = ''
-          messageArea.style.display = 'none'
-        }
+    function paintAt(e) {
+      const rect = canvas.getBoundingClientRect()
+      const scaleX = canvas.width / rect.width
+      const scaleY = canvas.height / rect.height
+      const clientX = e.clientX ?? e.touches?.[0]?.clientX
+      const clientY = e.clientY ?? e.touches?.[0]?.clientY
+      if (clientX == null || clientY == null) return
+      const x = Math.floor((clientX - rect.left) * scaleX / CELL)
+      const y = Math.floor((clientY - rect.top) * scaleY / CELL)
+      if (x < 0 || x >= GRID || y < 0 || y >= GRID) return
+
+      const key = `${x}:${y}`
+      if (isEraser) {
+        pixels.delete(key)
+      } else {
+        pixels.set(key, { x, y, color: currentColor, size: 1 })
       }
+      drawGrid()
+      updateOutput()
+    }
 
-      // Initialize the page
-      document.addEventListener('DOMContentLoaded', function () {
-        // Display the JSON for each example, pretty-printed
-        document.getElementById('basic-json').textContent = JSON.stringify(
-          examples.basic.pxon,
-          null,
-          2
-        )
-        document.getElementById('heart-json').textContent = JSON.stringify(
-          examples.heart.pxon,
-          null,
-          2
-        )
+    canvas.addEventListener('mousedown', (e) => { isDrawing = true; paintAt(e) })
+    canvas.addEventListener('mousemove', (e) => { if (isDrawing) paintAt(e) })
+    canvas.addEventListener('mouseup', () => { isDrawing = false })
+    canvas.addEventListener('mouseleave', () => { isDrawing = false })
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isDrawing = true; paintAt(e) }, { passive: false })
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (isDrawing) paintAt(e) }, { passive: false })
+    canvas.addEventListener('touchend', () => { isDrawing = false })
 
-        // Initialize with the first example rendered
-        renderExample('basic')
-        renderExample('heart')
+    // Color swatches
+    document.querySelectorAll('.color-swatch').forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'))
+        swatch.classList.add('active')
+        currentColor = swatch.dataset.color
+        isEraser = false
+        document.getElementById('eraser-btn').style.borderColor = ''
+        document.getElementById('eraser-btn').style.color = ''
       })
+    })
 
-      // Render a specific example
-      function renderExample(exampleId) {
-        const pxonData = examples[exampleId].pxon
-        renderPixelGrid(pxonData, `${exampleId}-grid`)
+    // Eraser
+    document.getElementById('eraser-btn').addEventListener('click', () => {
+      isEraser = !isEraser
+      const btn = document.getElementById('eraser-btn')
+      if (isEraser) {
+        document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'))
+        btn.style.borderColor = '#f72585'
+        btn.style.color = '#f72585'
+      } else {
+        btn.style.borderColor = ''
+        btn.style.color = ''
       }
-      window.renderExample = renderExample
+    })
 
-      // Render custom PXON input
-      function renderCustom() {
-        const customInputArea = document.getElementById('custom-input')
-        const messageAreaId = 'custom-message-area'
-        const gridId = 'custom-grid'
+    // Clear
+    document.getElementById('clear-btn').addEventListener('click', () => {
+      pixels.clear()
+      drawGrid()
+      updateOutput()
+    })
 
-        clearMessage(messageAreaId) // Clear previous messages
-        document.getElementById(gridId).innerHTML = '' // Clear previous custom grid
+    // Copy PXON
+    document.getElementById('export-btn').addEventListener('click', () => {
+      const json = buildPXON()
+      navigator.clipboard.writeText(JSON.stringify(json, null, 2))
+      const btn = document.getElementById('export-btn')
+      btn.textContent = 'Copied!'
+      setTimeout(() => { btn.textContent = 'Copy PXON' }, 1200)
+    })
 
-        try {
-          let rawInput = customInputArea.value
-          if (!rawInput.trim()) {
-            showMessage(messageAreaId, 'Please enter some PXON JSON data.', 'error')
-            return
-          }
-
-          // Attempt to clean the JSON input
-          // 1. Remove single-line comments (// ...)
-          let cleanedInput = rawInput.replace(/\/\/.*/g, '')
-          // 2. Remove multi-line comments (/* ... */) - careful with nested, but usually fine for JSON.
-          cleanedInput = cleanedInput.replace(/\/\*[\s\S]*?\*\//g, '')
-          // 3. Attempt to remove trailing commas from arrays and objects
-          cleanedInput = cleanedInput.replace(/,\s*\]/g, ']') // Trailing comma in array
-          cleanedInput = cleanedInput.replace(/,\s*\}/g, '}') // Trailing comma in object
-
-          const pxonData = JSON.parse(cleanedInput)
-
-          // Basic validation of PXON structure
-          if (
-            !pxonData ||
-            typeof pxonData.width !== 'number' ||
-            typeof pxonData.height !== 'number' ||
-            !Array.isArray(pxonData.pixels) ||
-            typeof pxonData.colors !== 'object' ||
-            pxonData.colors === null
-          ) {
-            showMessage(
-              messageAreaId,
-              'The JSON data does not appear to be a valid PXON object. Missing or invalid required fields (width, height, pixels, colors).',
-              'error'
-            )
-            return
-          }
-
-          renderPixelGrid(pxonData, gridId)
-          showMessage(messageAreaId, 'Visualization updated successfully!', 'success')
-        } catch (error) {
-          console.error('Error parsing or rendering custom PXON:', error)
-          showMessage(
-            messageAreaId,
-            'Invalid JSON or PXON structure: ' +
-              error.message +
-              '. Please check for syntax errors, unclosed brackets/braces, or ensure comments are correctly formatted if used.',
-            'error'
-          )
-        }
+    function buildPXON() {
+      return {
+        exif: {
+          software: 'https://matthewhudson.github.io/pxon/',
+          artist: '',
+          imageDescription: '',
+          userComment: '',
+          copyright: '',
+          dateTime: new Date().toISOString(),
+        },
+        pxif: {
+          pixels: [...pixels.values()],
+        },
+        dataURL: '',
       }
-      window.renderCustom = renderCustom
+    }
 
-      // Render a pixel grid from PXON data
-      function renderPixelGrid(pxonData, targetId) {
-        const gridElement = document.getElementById(targetId)
-        gridElement.innerHTML = '' // Clear previous grid content
+    function updateOutput() {
+      const output = document.getElementById('playground-output')
+      const json = buildPXON()
+      output.querySelector('code').textContent = JSON.stringify(json, null, 2)
+    }
 
-        // Set the grid dimensions
-        const width = pxonData.width
-        const height = pxonData.height
-        const pixelSize = 20 // Size of each pixel in pixels
-
-        gridElement.style.width = width * pixelSize + 'px'
-        gridElement.style.height = height * pixelSize + 'px'
-
-        // Create a 2D array to represent the grid, initialized with a default (e.g., transparent or a specific background)
-        // This helps in explicitly defining every cell.
-        const gridData = Array(height)
-          .fill(null)
-          .map(() => Array(width).fill(null))
-
-        // Fill in the pixels from the PXON data
-        // Ensure pxonData.pixels is an array before trying to iterate
-        if (Array.isArray(pxonData.pixels)) {
-          pxonData.pixels.forEach(pixel => {
-            // Check if pixel coordinates are within bounds
-            if (
-              pixel &&
-              typeof pixel.x === 'number' &&
-              typeof pixel.y === 'number' &&
-              pixel.x >= 0 &&
-              pixel.x < width &&
-              pixel.y >= 0 &&
-              pixel.y < height
-            ) {
-              gridData[pixel.y][pixel.x] = pixel.color
-            }
-          })
-        }
-
-        // Render the grid
-        for (let y = 0; y < height; y++) {
-          for (let x = 0; x < width; x++) {
-            const pixelElement = document.createElement('div')
-            pixelElement.className = 'pixel'
-            // pixelElement.style.width = pixelSize + 'px'; // Already set by class if fixed, but good for clarity
-            // pixelElement.style.height = pixelSize + 'px'; // Already set by class
-
-            const colorKey = gridData[y][x]
-            // Ensure pxonData.colors is an object and not null before accessing
-            if (
-              colorKey &&
-              pxonData.colors &&
-              typeof pxonData.colors === 'object' &&
-              pxonData.colors[colorKey]
-            ) {
-              pixelElement.style.backgroundColor = pxonData.colors[colorKey]
-            } else {
-              // Default to transparent for empty or undefined colorKey pixels
-              pixelElement.style.backgroundColor = 'transparent'
-              // Optionally, add a very light border to see "empty" defined cells
-              pixelElement.style.border = '1px dotted #e2e8f0'
-            }
-
-            gridElement.appendChild(pixelElement)
+    // ============ SCROLL ANIMATIONS ============
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in')
+            observer.unobserve(entry.target)
           }
-        }
-      }
-    </script>
-  </body>
+        })
+      },
+      { threshold: 0.1 }
+    )
+    document.querySelectorAll('section').forEach((s) => observer.observe(s))
+
+    // ============ INIT ============
+    drawGrid()
+    updateOutput()
+  </script>
+</body>
 </html>
