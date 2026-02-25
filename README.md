@@ -93,7 +93,7 @@ console.log(pxon.export())
 
 ## Additional Resources
 
-- [PXON Specification](http://jennmoney.biz/pxon/) - specs for the "pixel art object notation" format
+- [PXON Specification](https://jennschiffer.com/art/pxon) - specs for the "pixel art object notation" format
 - [make8bitart.com](https://make8bitart.com/) - pixel art painting app
 - [pxonloop](http://pxonloop.glitch.me/) - a pxon playground
 - [image-to-pxon](http://image-to-pxon.glitch.me/) - app that converts image to pxon
