@@ -1,70 +1,51 @@
 name: Release
 
 on:
-  workflow_dispatch: # Manual trigger
   push:
     branches:
       - main
-    paths:
-      - '.changeset/**'
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
-          version: latest
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+          node-version: 22
+          cache: pnpm
+      - run: npm install -g npm@latest
+      - run: pnpm install
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
         with:
-          node-version: 22.x
-          registry-url: 'https://registry.npmjs.org/'
-          scope: '@matthewhudson'
-          cache: 'pnpm'
-
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm run build
-
-      - name: Version and Create GitHub Release
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-
-          # Apply version changes
-          npx changeset version
-
-          # Get version from package.json
-          VERSION=$(node -p "require('./package.json').version")
-
-          # Extract changes from the latest changeset
-          CHANGESET_CONTENT=$(find .changeset -name "*.md" -not -name "README.md" -type f -exec cat {} \;)
-
-          # Commit version changes
-          git add .
-          git commit -m "chore(release): version $VERSION"
-          git tag -a "v$VERSION" -m "Release v$VERSION"
-          git push --follow-tags
-
-          # Create GitHub Release
-          npx conventional-changelog-cli -p angular -i CHANGELOG.md -s
-          gh release create "v$VERSION" --title "v$VERSION" --notes "$CHANGESET_CONTENT" --generate-notes
+          publish: pnpm run release
+          commit: "chore: version packages"
+          title: "chore: version packages"
+          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish to npm
-        run: pnpm publish --access public --no-git-checks
+          NPM_CONFIG_PROVENANCE: true
+      - name: Create GitHub Release (fallback)
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          VERSION="v$(jq -r '.version' package.json)"
+          if ! gh release view "$VERSION" > /dev/null 2>&1; then
+            CHANGELOG=$(sed -n "/^## ${VERSION#v}/,/^## /p" CHANGELOG.md | sed '1d;$d')
+            gh release create "$VERSION" --title "$VERSION" --notes "$CHANGELOG" --target "$GITHUB_SHA"
+            echo "Created GitHub release $VERSION"
+          else
+            echo "GitHub release $VERSION already exists"
+          fi
         env:
-          NODE_AUTH_TOKEN: "${{ secrets.NPM_TOKEN }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
