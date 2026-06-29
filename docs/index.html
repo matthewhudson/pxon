@@ -357,408 +357,1903 @@
       const examples = {
         mario: {
           pxon: {
-            version: '1.0',
-            title: 'Mario',
-            description: 'Classic standing Mario sprite',
-            width: 16,
-            height: 16,
-            colors: {
-              R: '#E52521',
-              B: '#0038A8',
-              S: '#FFB580',
-              H: '#6B3304',
-              Y: '#FBD000',
-            },
-            pixels: [
-              // Row 0: top of cap
-              { x: 5, y: 0, color: 'R' },
-              { x: 6, y: 0, color: 'R' },
-              { x: 7, y: 0, color: 'R' },
-              { x: 8, y: 0, color: 'R' },
-              { x: 9, y: 0, color: 'R' },
-
-              // Row 1: cap widens
-              { x: 4, y: 1, color: 'R' },
-              { x: 5, y: 1, color: 'R' },
-              { x: 6, y: 1, color: 'R' },
-              { x: 7, y: 1, color: 'R' },
-              { x: 8, y: 1, color: 'R' },
-              { x: 9, y: 1, color: 'R' },
-              { x: 10, y: 1, color: 'R' },
-              { x: 11, y: 1, color: 'R' },
-              { x: 12, y: 1, color: 'R' },
-
-              // Row 2: hair line + face start
-              { x: 4, y: 2, color: 'H' },
-              { x: 5, y: 2, color: 'H' },
-              { x: 6, y: 2, color: 'H' },
-              { x: 7, y: 2, color: 'S' },
-              { x: 8, y: 2, color: 'S' },
-              { x: 9, y: 2, color: 'S' },
-              { x: 10, y: 2, color: 'H' },
-              { x: 11, y: 2, color: 'S' },
-
-              // Row 3: face with eyes
-              { x: 3, y: 3, color: 'H' },
-              { x: 4, y: 3, color: 'S' },
-              { x: 5, y: 3, color: 'H' },
-              { x: 6, y: 3, color: 'S' },
-              { x: 7, y: 3, color: 'S' },
-              { x: 8, y: 3, color: 'S' },
-              { x: 9, y: 3, color: 'H' },
-              { x: 10, y: 3, color: 'S' },
-              { x: 11, y: 3, color: 'S' },
-              { x: 12, y: 3, color: 'S' },
-
-              // Row 4: face with nose/mustache
-              { x: 3, y: 4, color: 'H' },
-              { x: 4, y: 4, color: 'S' },
-              { x: 5, y: 4, color: 'H' },
-              { x: 6, y: 4, color: 'H' },
-              { x: 7, y: 4, color: 'S' },
-              { x: 8, y: 4, color: 'S' },
-              { x: 9, y: 4, color: 'S' },
-              { x: 10, y: 4, color: 'H' },
-              { x: 11, y: 4, color: 'S' },
-              { x: 12, y: 4, color: 'S' },
-              { x: 13, y: 4, color: 'S' },
-
-              // Row 5: chin/face bottom
-              { x: 3, y: 5, color: 'H' },
-              { x: 4, y: 5, color: 'H' },
-              { x: 5, y: 5, color: 'S' },
-              { x: 6, y: 5, color: 'S' },
-              { x: 7, y: 5, color: 'S' },
-              { x: 8, y: 5, color: 'S' },
-              { x: 9, y: 5, color: 'H' },
-              { x: 10, y: 5, color: 'H' },
-              { x: 11, y: 5, color: 'H' },
-              { x: 12, y: 5, color: 'H' },
-
-              // Row 6: shirt top
-              { x: 5, y: 6, color: 'R' },
-              { x: 6, y: 6, color: 'R' },
-              { x: 7, y: 6, color: 'B' },
-              { x: 8, y: 6, color: 'R' },
-              { x: 9, y: 6, color: 'R' },
-              { x: 10, y: 6, color: 'B' },
-
-              // Row 7: arms + shirt
-              { x: 4, y: 7, color: 'R' },
-              { x: 5, y: 7, color: 'R' },
-              { x: 6, y: 7, color: 'R' },
-              { x: 7, y: 7, color: 'B' },
-              { x: 8, y: 7, color: 'R' },
-              { x: 9, y: 7, color: 'R' },
-              { x: 10, y: 7, color: 'B' },
-              { x: 11, y: 7, color: 'R' },
-              { x: 12, y: 7, color: 'R' },
-              { x: 13, y: 7, color: 'R' },
-
-              // Row 8: arms + overalls
-              { x: 3, y: 8, color: 'S' },
-              { x: 4, y: 8, color: 'R' },
-              { x: 5, y: 8, color: 'R' },
-              { x: 6, y: 8, color: 'R' },
-              { x: 7, y: 8, color: 'B' },
-              { x: 8, y: 8, color: 'B' },
-              { x: 9, y: 8, color: 'B' },
-              { x: 10, y: 8, color: 'B' },
-              { x: 11, y: 8, color: 'R' },
-              { x: 12, y: 8, color: 'R' },
-              { x: 13, y: 8, color: 'R' },
-              { x: 14, y: 8, color: 'S' },
-
-              // Row 9: hands + overalls with buttons
-              { x: 2, y: 9, color: 'S' },
-              { x: 3, y: 9, color: 'S' },
-              { x: 4, y: 9, color: 'R' },
-              { x: 5, y: 9, color: 'R' },
-              { x: 6, y: 9, color: 'B' },
-              { x: 7, y: 9, color: 'Y' },
-              { x: 8, y: 9, color: 'B' },
-              { x: 9, y: 9, color: 'B' },
-              { x: 10, y: 9, color: 'Y' },
-              { x: 11, y: 9, color: 'B' },
-              { x: 12, y: 9, color: 'R' },
-              { x: 13, y: 9, color: 'S' },
-              { x: 14, y: 9, color: 'S' },
-
-              // Row 10: overalls mid
-              { x: 2, y: 10, color: 'S' },
-              { x: 3, y: 10, color: 'S' },
-              { x: 4, y: 10, color: 'S' },
-              { x: 5, y: 10, color: 'B' },
-              { x: 6, y: 10, color: 'B' },
-              { x: 7, y: 10, color: 'B' },
-              { x: 8, y: 10, color: 'B' },
-              { x: 9, y: 10, color: 'B' },
-              { x: 10, y: 10, color: 'B' },
-              { x: 11, y: 10, color: 'B' },
-              { x: 12, y: 10, color: 'S' },
-              { x: 13, y: 10, color: 'S' },
-
-              // Row 11: overalls bottom
-              { x: 5, y: 11, color: 'B' },
-              { x: 6, y: 11, color: 'B' },
-              { x: 7, y: 11, color: 'B' },
-              { x: 8, y: 11, color: 'B' },
-              { x: 9, y: 11, color: 'B' },
-              { x: 10, y: 11, color: 'B' },
-              { x: 11, y: 11, color: 'B' },
-
-              // Row 12: legs split
-              { x: 4, y: 12, color: 'H' },
-              { x: 5, y: 12, color: 'H' },
-              { x: 6, y: 12, color: 'H' },
-              { x: 10, y: 12, color: 'H' },
-              { x: 11, y: 12, color: 'H' },
-              { x: 12, y: 12, color: 'H' },
-
-              // Row 13: shoes
-              { x: 3, y: 13, color: 'H' },
-              { x: 4, y: 13, color: 'H' },
-              { x: 5, y: 13, color: 'H' },
-              { x: 6, y: 13, color: 'H' },
-              { x: 10, y: 13, color: 'H' },
-              { x: 11, y: 13, color: 'H' },
-              { x: 12, y: 13, color: 'H' },
-              { x: 13, y: 13, color: 'H' },
-            ],
+          "exif": {
+                    "software": "https://github.com/matthewhudson/pxon",
+                    "artist": "jenn schiffer",
+                    "imageDescription": "Classic standing Mario sprite",
+                    "userComment": "",
+                    "copyright": "",
+                    "dateTime": "2025-05-15T12:00:00Z"
           },
+          "pxif": {
+                    "pixels": [
+                              {
+                                        "x": 5,
+                                        "y": 0,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 0,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 0,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 0,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 0,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 1,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 2,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 2,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 2,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 2,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 2,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 2,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 2,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 2,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 3,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 3,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 3,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 3,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 3,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 3,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 3,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 3,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 3,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 3,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 4,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 4,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 4,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 4,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 4,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 4,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 4,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 4,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 4,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 4,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 4,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 5,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 5,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 5,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 5,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 5,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 5,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 5,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 5,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 5,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 5,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 6,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 6,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 6,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 6,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 6,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 6,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 7,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 7,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 7,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 7,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 7,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 7,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 7,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 7,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 7,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 7,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 8,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 8,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 8,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 8,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 8,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 8,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 8,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 8,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 8,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 8,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 8,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 14,
+                                        "y": 8,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 9,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 9,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 9,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 9,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 9,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 9,
+                                        "color": "#FBD000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 9,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 9,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 9,
+                                        "color": "#FBD000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 9,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 9,
+                                        "color": "#E52521",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 9,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 14,
+                                        "y": 9,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 10,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 10,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 10,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 10,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 10,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 10,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 10,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 10,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 10,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 10,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 10,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 10,
+                                        "color": "#FFB580",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 11,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 11,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 11,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 11,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 11,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 11,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 11,
+                                        "color": "#0038A8",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 12,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 12,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 12,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 12,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 12,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 12,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 13,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 13,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 13,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 13,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 13,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 13,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 13,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 13,
+                                        "color": "#6B3304",
+                                        "size": 1
+                              }
+                    ]
+          },
+          "dataURL": ""
+}
         },
         mushroom: {
           pxon: {
-            version: '1.0',
-            title: '1-Up Mushroom',
-            description: 'Classic 1-Up mushroom from Super Mario Bros',
-            width: 16,
-            height: 16,
-            colors: {
-              G: '#00A800',
-              W: '#FFFFFF',
-              T: '#FFCC99',
-              K: '#000000',
-              E: '#FFE0BD',
-            },
-            pixels: [
-              // Row 0: top outline of dome
-              { x: 5, y: 0, color: 'K' },
-              { x: 6, y: 0, color: 'K' },
-              { x: 7, y: 0, color: 'K' },
-              { x: 8, y: 0, color: 'K' },
-              { x: 9, y: 0, color: 'K' },
-              { x: 10, y: 0, color: 'K' },
-
-              // Row 1: dome widens
-              { x: 3, y: 1, color: 'K' },
-              { x: 4, y: 1, color: 'K' },
-              { x: 5, y: 1, color: 'W' },
-              { x: 6, y: 1, color: 'W' },
-              { x: 7, y: 1, color: 'G' },
-              { x: 8, y: 1, color: 'G' },
-              { x: 9, y: 1, color: 'W' },
-              { x: 10, y: 1, color: 'W' },
-              { x: 11, y: 1, color: 'K' },
-              { x: 12, y: 1, color: 'K' },
-
-              // Row 2
-              { x: 2, y: 2, color: 'K' },
-              { x: 3, y: 2, color: 'W' },
-              { x: 4, y: 2, color: 'W' },
-              { x: 5, y: 2, color: 'W' },
-              { x: 6, y: 2, color: 'G' },
-              { x: 7, y: 2, color: 'G' },
-              { x: 8, y: 2, color: 'G' },
-              { x: 9, y: 2, color: 'G' },
-              { x: 10, y: 2, color: 'W' },
-              { x: 11, y: 2, color: 'W' },
-              { x: 12, y: 2, color: 'W' },
-              { x: 13, y: 2, color: 'K' },
-
-              // Row 3
-              { x: 1, y: 3, color: 'K' },
-              { x: 2, y: 3, color: 'G' },
-              { x: 3, y: 3, color: 'W' },
-              { x: 4, y: 3, color: 'W' },
-              { x: 5, y: 3, color: 'G' },
-              { x: 6, y: 3, color: 'G' },
-              { x: 7, y: 3, color: 'G' },
-              { x: 8, y: 3, color: 'G' },
-              { x: 9, y: 3, color: 'G' },
-              { x: 10, y: 3, color: 'G' },
-              { x: 11, y: 3, color: 'W' },
-              { x: 12, y: 3, color: 'W' },
-              { x: 13, y: 3, color: 'G' },
-              { x: 14, y: 3, color: 'K' },
-
-              // Row 4
-              { x: 1, y: 4, color: 'K' },
-              { x: 2, y: 4, color: 'G' },
-              { x: 3, y: 4, color: 'G' },
-              { x: 4, y: 4, color: 'W' },
-              { x: 5, y: 4, color: 'G' },
-              { x: 6, y: 4, color: 'G' },
-              { x: 7, y: 4, color: 'W' },
-              { x: 8, y: 4, color: 'W' },
-              { x: 9, y: 4, color: 'G' },
-              { x: 10, y: 4, color: 'G' },
-              { x: 11, y: 4, color: 'W' },
-              { x: 12, y: 4, color: 'G' },
-              { x: 13, y: 4, color: 'G' },
-              { x: 14, y: 4, color: 'K' },
-
-              // Row 5
-              { x: 0, y: 5, color: 'K' },
-              { x: 1, y: 5, color: 'G' },
-              { x: 2, y: 5, color: 'G' },
-              { x: 3, y: 5, color: 'G' },
-              { x: 4, y: 5, color: 'W' },
-              { x: 5, y: 5, color: 'W' },
-              { x: 6, y: 5, color: 'W' },
-              { x: 7, y: 5, color: 'W' },
-              { x: 8, y: 5, color: 'W' },
-              { x: 9, y: 5, color: 'W' },
-              { x: 10, y: 5, color: 'W' },
-              { x: 11, y: 5, color: 'W' },
-              { x: 12, y: 5, color: 'G' },
-              { x: 13, y: 5, color: 'G' },
-              { x: 14, y: 5, color: 'G' },
-              { x: 15, y: 5, color: 'K' },
-
-              // Row 6
-              { x: 0, y: 6, color: 'K' },
-              { x: 1, y: 6, color: 'G' },
-              { x: 2, y: 6, color: 'W' },
-              { x: 3, y: 6, color: 'W' },
-              { x: 4, y: 6, color: 'W' },
-              { x: 5, y: 6, color: 'W' },
-              { x: 6, y: 6, color: 'W' },
-              { x: 7, y: 6, color: 'W' },
-              { x: 8, y: 6, color: 'W' },
-              { x: 9, y: 6, color: 'W' },
-              { x: 10, y: 6, color: 'W' },
-              { x: 11, y: 6, color: 'W' },
-              { x: 12, y: 6, color: 'W' },
-              { x: 13, y: 6, color: 'W' },
-              { x: 14, y: 6, color: 'G' },
-              { x: 15, y: 6, color: 'K' },
-
-              // Row 7: bottom of cap
-              { x: 0, y: 7, color: 'K' },
-              { x: 1, y: 7, color: 'W' },
-              { x: 2, y: 7, color: 'W' },
-              { x: 3, y: 7, color: 'W' },
-              { x: 4, y: 7, color: 'W' },
-              { x: 5, y: 7, color: 'W' },
-              { x: 6, y: 7, color: 'W' },
-              { x: 7, y: 7, color: 'W' },
-              { x: 8, y: 7, color: 'W' },
-              { x: 9, y: 7, color: 'W' },
-              { x: 10, y: 7, color: 'W' },
-              { x: 11, y: 7, color: 'W' },
-              { x: 12, y: 7, color: 'W' },
-              { x: 13, y: 7, color: 'W' },
-              { x: 14, y: 7, color: 'W' },
-              { x: 15, y: 7, color: 'K' },
-
-              // Row 8: cap bottom outline + face top
-              { x: 1, y: 8, color: 'K' },
-              { x: 2, y: 8, color: 'K' },
-              { x: 3, y: 8, color: 'K' },
-              { x: 4, y: 8, color: 'K' },
-              { x: 5, y: 8, color: 'K' },
-              { x: 6, y: 8, color: 'K' },
-              { x: 7, y: 8, color: 'K' },
-              { x: 8, y: 8, color: 'K' },
-              { x: 9, y: 8, color: 'K' },
-              { x: 10, y: 8, color: 'K' },
-              { x: 11, y: 8, color: 'K' },
-              { x: 12, y: 8, color: 'K' },
-              { x: 13, y: 8, color: 'K' },
-              { x: 14, y: 8, color: 'K' },
-
-              // Row 9: face/stem top
-              { x: 2, y: 9, color: 'K' },
-              { x: 3, y: 9, color: 'E' },
-              { x: 4, y: 9, color: 'E' },
-              { x: 5, y: 9, color: 'E' },
-              { x: 6, y: 9, color: 'E' },
-              { x: 7, y: 9, color: 'E' },
-              { x: 8, y: 9, color: 'E' },
-              { x: 9, y: 9, color: 'E' },
-              { x: 10, y: 9, color: 'E' },
-              { x: 11, y: 9, color: 'E' },
-              { x: 12, y: 9, color: 'E' },
-              { x: 13, y: 9, color: 'K' },
-
-              // Row 10: face with eyes
-              { x: 2, y: 10, color: 'K' },
-              { x: 3, y: 10, color: 'E' },
-              { x: 4, y: 10, color: 'K' },
-              { x: 5, y: 10, color: 'K' },
-              { x: 6, y: 10, color: 'E' },
-              { x: 7, y: 10, color: 'E' },
-              { x: 8, y: 10, color: 'E' },
-              { x: 9, y: 10, color: 'E' },
-              { x: 10, y: 10, color: 'K' },
-              { x: 11, y: 10, color: 'K' },
-              { x: 12, y: 10, color: 'E' },
-              { x: 13, y: 10, color: 'K' },
-
-              // Row 11: face with eyes
-              { x: 3, y: 11, color: 'K' },
-              { x: 4, y: 11, color: 'K' },
-              { x: 5, y: 11, color: 'K' },
-              { x: 6, y: 11, color: 'E' },
-              { x: 7, y: 11, color: 'E' },
-              { x: 8, y: 11, color: 'E' },
-              { x: 9, y: 11, color: 'E' },
-              { x: 10, y: 11, color: 'K' },
-              { x: 11, y: 11, color: 'K' },
-              { x: 12, y: 11, color: 'K' },
-
-              // Row 12: stem
-              { x: 3, y: 12, color: 'K' },
-              { x: 4, y: 12, color: 'T' },
-              { x: 5, y: 12, color: 'T' },
-              { x: 6, y: 12, color: 'T' },
-              { x: 7, y: 12, color: 'T' },
-              { x: 8, y: 12, color: 'T' },
-              { x: 9, y: 12, color: 'T' },
-              { x: 10, y: 12, color: 'T' },
-              { x: 11, y: 12, color: 'T' },
-              { x: 12, y: 12, color: 'K' },
-
-              // Row 13: stem
-              { x: 4, y: 13, color: 'K' },
-              { x: 5, y: 13, color: 'T' },
-              { x: 6, y: 13, color: 'T' },
-              { x: 7, y: 13, color: 'T' },
-              { x: 8, y: 13, color: 'T' },
-              { x: 9, y: 13, color: 'T' },
-              { x: 10, y: 13, color: 'T' },
-              { x: 11, y: 13, color: 'K' },
-
-              // Row 14: stem bottom
-              { x: 4, y: 14, color: 'K' },
-              { x: 5, y: 14, color: 'T' },
-              { x: 6, y: 14, color: 'T' },
-              { x: 7, y: 14, color: 'T' },
-              { x: 8, y: 14, color: 'T' },
-              { x: 9, y: 14, color: 'T' },
-              { x: 10, y: 14, color: 'T' },
-              { x: 11, y: 14, color: 'K' },
-
-              // Row 15: bottom outline
-              { x: 5, y: 15, color: 'K' },
-              { x: 6, y: 15, color: 'K' },
-              { x: 7, y: 15, color: 'K' },
-              { x: 8, y: 15, color: 'K' },
-              { x: 9, y: 15, color: 'K' },
-              { x: 10, y: 15, color: 'K' },
-            ],
+          "exif": {
+                    "software": "https://github.com/matthewhudson/pxon",
+                    "artist": "jenn schiffer",
+                    "imageDescription": "Classic 1-Up mushroom from Super Mario Bros",
+                    "userComment": "",
+                    "copyright": "",
+                    "dateTime": "2025-05-15T12:00:00Z"
           },
+          "pxif": {
+                    "pixels": [
+                              {
+                                        "x": 5,
+                                        "y": 0,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 0,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 0,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 0,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 0,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 0,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 1,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 1,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 1,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 1,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 1,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 1,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 1,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 1,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 1,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 1,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 2,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 2,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 2,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 2,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 2,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 2,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 2,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 2,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 2,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 2,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 2,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 2,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 1,
+                                        "y": 3,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 3,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 3,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 3,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 3,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 3,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 3,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 3,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 3,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 3,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 3,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 3,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 3,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 14,
+                                        "y": 3,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 1,
+                                        "y": 4,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 4,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 4,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 4,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 4,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 4,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 4,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 4,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 4,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 4,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 4,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 4,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 4,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 14,
+                                        "y": 4,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 0,
+                                        "y": 5,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 1,
+                                        "y": 5,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 5,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 5,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 5,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 5,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 5,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 5,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 5,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 5,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 5,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 5,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 5,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 5,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 14,
+                                        "y": 5,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 15,
+                                        "y": 5,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 0,
+                                        "y": 6,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 1,
+                                        "y": 6,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 6,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 14,
+                                        "y": 6,
+                                        "color": "#00A800",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 15,
+                                        "y": 6,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 0,
+                                        "y": 7,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 1,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 14,
+                                        "y": 7,
+                                        "color": "#FFFFFF",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 15,
+                                        "y": 7,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 1,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 14,
+                                        "y": 8,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 9,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 9,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 9,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 2,
+                                        "y": 10,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 10,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 10,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 10,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 10,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 10,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 10,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 10,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 10,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 10,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 10,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 13,
+                                        "y": 10,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 11,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 11,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 11,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 11,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 11,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 11,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 11,
+                                        "color": "#FFE0BD",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 11,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 11,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 11,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 3,
+                                        "y": 12,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 12,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 12,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 12,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 12,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 12,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 12,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 12,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 12,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 12,
+                                        "y": 12,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 13,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 13,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 13,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 13,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 13,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 13,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 13,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 13,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 4,
+                                        "y": 14,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 14,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 14,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 14,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 14,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 14,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 14,
+                                        "color": "#FFCC99",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 11,
+                                        "y": 14,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 5,
+                                        "y": 15,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 6,
+                                        "y": 15,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 7,
+                                        "y": 15,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 8,
+                                        "y": 15,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 9,
+                                        "y": 15,
+                                        "color": "#000000",
+                                        "size": 1
+                              },
+                              {
+                                        "x": 10,
+                                        "y": 15,
+                                        "color": "#000000",
+                                        "size": 1
+                              }
+                    ]
+          },
+          "dataURL": ""
+}
         },
       }
 
@@ -825,15 +2320,12 @@
 
           if (
             !pxonData ||
-            typeof pxonData.width !== 'number' ||
-            typeof pxonData.height !== 'number' ||
-            !Array.isArray(pxonData.pixels) ||
-            typeof pxonData.colors !== 'object' ||
-            pxonData.colors === null
+            !pxonData.pxif ||
+            !Array.isArray(pxonData.pxif.pixels)
           ) {
             showMessage(
               messageAreaId,
-              'Invalid PXON: missing width, height, pixels, or colors.',
+              'Invalid PXON: missing pxif or pixels array.',
               'error'
             )
             return
@@ -856,8 +2348,11 @@
         const gridElement = document.getElementById(targetId)
         gridElement.innerHTML = ''
 
-        const width = pxonData.width
-        const height = pxonData.height
+        const pixels = pxonData.pxif ? pxonData.pxif.pixels : []
+        if (pixels.length === 0) return
+
+        const width = Math.max(...pixels.map(p => p.x)) + 1
+        const height = Math.max(...pixels.map(p => p.y)) + 1
         const pixelSize = 16
 
         gridElement.style.width = width * pixelSize + 'px'
@@ -867,38 +2362,27 @@
           .fill(null)
           .map(() => Array(width).fill(null))
 
-        if (Array.isArray(pxonData.pixels)) {
-          pxonData.pixels.forEach(pixel => {
-            if (
-              pixel &&
-              typeof pixel.x === 'number' &&
-              typeof pixel.y === 'number' &&
-              pixel.x >= 0 &&
-              pixel.x < width &&
-              pixel.y >= 0 &&
-              pixel.y < height
-            ) {
-              gridData[pixel.y][pixel.x] = pixel.color
-            }
-          })
-        }
+        pixels.forEach(pixel => {
+          if (
+            pixel &&
+            typeof pixel.x === 'number' &&
+            typeof pixel.y === 'number' &&
+            pixel.x >= 0 &&
+            pixel.x < width &&
+            pixel.y >= 0 &&
+            pixel.y < height
+          ) {
+            gridData[pixel.y][pixel.x] = pixel.color
+          }
+        })
 
         for (let y = 0; y < height; y++) {
           for (let x = 0; x < width; x++) {
             const pixelElement = document.createElement('div')
             pixelElement.className = 'pixel'
 
-            const colorKey = gridData[y][x]
-            if (
-              colorKey &&
-              pxonData.colors &&
-              typeof pxonData.colors === 'object' &&
-              pxonData.colors[colorKey]
-            ) {
-              pixelElement.style.backgroundColor = pxonData.colors[colorKey]
-            } else {
-              pixelElement.style.backgroundColor = 'transparent'
-            }
+            const color = gridData[y][x]
+            pixelElement.style.backgroundColor = color || 'transparent'
 
             gridElement.appendChild(pixelElement)
           }
